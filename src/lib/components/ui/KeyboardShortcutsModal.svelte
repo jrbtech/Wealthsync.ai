@@ -11,22 +11,27 @@
   let { open = $bindable(false), onclose }: Props = $props();
 
   const shortcuts = [
-    { category: 'Navigation', items: [
+    { category: 'Global', items: [
       { keys: ['⌘', 'K'], description: 'Open command palette' },
-      { keys: ['G', 'H'], description: 'Go to dashboard' },
-      { keys: ['G', 'A'], description: 'Go to advisors' },
-      { keys: ['G', 'D'], description: 'Go to deadlines' },
-      { keys: ['G', 'W'], description: 'Go to wealth tracker' },
-    ]},
-    { category: 'Actions', items: [
-      { keys: ['N'], description: 'Create new item (context-aware)' },
       { keys: ['?'], description: 'Show keyboard shortcuts' },
       { keys: ['Esc'], description: 'Close modal / Cancel' },
     ]},
-    { category: 'Lists', items: [
-      { keys: ['↑', '↓'], description: 'Navigate list items' },
-      { keys: ['Enter'], description: 'Select / Open item' },
-      { keys: ['J', 'K'], description: 'Move down / up' },
+    { category: 'Navigation (press G then...)', items: [
+      { keys: ['G', 'H'], description: 'Go to dashboard (home)' },
+      { keys: ['G', 'A'], description: 'Go to advisors' },
+      { keys: ['G', 'D'], description: 'Go to deadlines' },
+      { keys: ['G', 'W'], description: 'Go to wealth tracker' },
+      { keys: ['G', 'M'], description: 'Go to meetings' },
+      { keys: ['G', 'S'], description: 'Go to settings' },
+    ]},
+    { category: 'Lists & Tables', items: [
+      { keys: ['↑'], description: 'Move selection up' },
+      { keys: ['↓'], description: 'Move selection down' },
+      { keys: ['J'], description: 'Move selection down (vim)' },
+      { keys: ['K'], description: 'Move selection up (vim)' },
+      { keys: ['Enter'], description: 'Open selected item' },
+      { keys: ['Home'], description: 'Jump to first item' },
+      { keys: ['End'], description: 'Jump to last item' },
     ]},
   ];
 

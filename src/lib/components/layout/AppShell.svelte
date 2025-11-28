@@ -1,9 +1,11 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
+  import { goto } from '$app/navigation';
   import { uiStore } from '$lib/stores/ui';
   import Sidebar from './Sidebar.svelte';
   import Header from './Header.svelte';
   import { Toast } from '$lib/components/ui';
+  import { useNavigationShortcuts } from '$lib/hooks';
 
   interface Props {
     title?: string;
@@ -13,6 +15,9 @@
   let { title, children }: Props = $props();
 
   const sidebarOpen = $derived($uiStore.sidebarOpen);
+
+  // Enable global navigation shortcuts (g + key)
+  useNavigationShortcuts(goto);
 </script>
 
 <div class="min-h-screen bg-cream-200">
