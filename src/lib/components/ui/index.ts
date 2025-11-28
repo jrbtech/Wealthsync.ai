@@ -11,3 +11,4 @@ export { default as EmptyState } from './EmptyState.svelte';
 export { default as Spinner } from './Spinner.svelte';
 export { default as CommandPalette } from './CommandPalette.svelte';
 export { default as NotificationCenter } from './NotificationCenter.svelte';
+export { default as KeyboardShortcutsModal } from './KeyboardShortcutsModal.svelte';

@@ -7,10 +7,11 @@
   import { onAuthChange, getCurrentUser } from '$lib/firebase/auth';
   import { doc, getDoc } from 'firebase/firestore';
   import { db } from '$lib/firebase/client';
-  import { Spinner } from '$lib/components/ui';
+  import { Spinner, KeyboardShortcutsModal } from '$lib/components/ui';
   import '../app.css';
 
   let { children } = $props();
+  let shortcutsOpen = $state(false);
 
   // Public routes that don't require authentication
   const publicRoutes = ['/', '/auth/login', '/auth/signup', '/auth/forgot-password', '/auth/accept-invite'];
@@ -89,3 +90,6 @@
 {:else}
   {@render children()}
 {/if}
+
+<!-- Global keyboard shortcuts help -->
+<KeyboardShortcutsModal bind:open={shortcutsOpen} />

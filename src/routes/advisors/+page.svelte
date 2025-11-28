@@ -22,7 +22,10 @@
     Pencil,
     Trash2,
     AlertCircle,
-    Download
+    Download,
+    ArrowUpDown,
+    ArrowUp,
+    ArrowDown
   } from 'lucide-svelte';
   import type { Advisor, AdvisorSpecialty } from '$lib/types';
   import { ADVISOR_SPECIALTY_LABELS } from '$lib/types';
@@ -37,6 +40,8 @@
   let searchQuery = $state('');
   let filterSpecialty = $state('');
   let viewMode = $state<'grid' | 'list'>('grid');
+  let sortBy = $state<'name' | 'firm' | 'lastContact'>('name');
+  let sortDirection = $state<'asc' | 'desc'>('asc');
 
   // Modal state
   let modalOpen = $state(false);
@@ -101,8 +106,36 @@
       filtered = filtered.filter((a) => a.specialty === filterSpecialty);
     }
 
+    // Sort
+    filtered = [...filtered].sort((a, b) => {
+      let comparison = 0;
+      switch (sortBy) {
+        case 'name':
+          comparison = a.name.localeCompare(b.name);
+          break;
+        case 'firm':
+          comparison = a.firm.localeCompare(b.firm);
+          break;
+        case 'lastContact':
+          const aDate = a.lastContactDate ? new Date(a.lastContactDate).getTime() : 0;
+          const bDate = b.lastContactDate ? new Date(b.lastContactDate).getTime() : 0;
+          comparison = aDate - bDate;
+          break;
+      }
+      return sortDirection === 'asc' ? comparison : -comparison;
+    });
+
     filteredAdvisors = filtered;
   });
+
+  function toggleSort(column: 'name' | 'firm' | 'lastContact') {
+    if (sortBy === column) {
+      sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      sortBy = column;
+      sortDirection = 'asc';
+    }
+  }
 
   function openNewModal() {
     editingAdvisor = null;
@@ -352,11 +385,38 @@
           <table class="w-full">
             <thead>
               <tr class="border-b border-cream-200 bg-cream-100">
-                <th class="text-left px-4 py-3 text-sm font-medium text-cream-700">Name</th>
-                <th class="text-left px-4 py-3 text-sm font-medium text-cream-700">Firm</th>
+                <th class="text-left px-4 py-3 text-sm font-medium text-cream-700">
+                  <button class="flex items-center gap-1 hover:text-navy-800" onclick={() => toggleSort('name')}>
+                    Name
+                    {#if sortBy === 'name'}
+                      {#if sortDirection === 'asc'}<ArrowUp class="w-3 h-3" />{:else}<ArrowDown class="w-3 h-3" />{/if}
+                    {:else}
+                      <ArrowUpDown class="w-3 h-3 opacity-50" />
+                    {/if}
+                  </button>
+                </th>
+                <th class="text-left px-4 py-3 text-sm font-medium text-cream-700">
+                  <button class="flex items-center gap-1 hover:text-navy-800" onclick={() => toggleSort('firm')}>
+                    Firm
+                    {#if sortBy === 'firm'}
+                      {#if sortDirection === 'asc'}<ArrowUp class="w-3 h-3" />{:else}<ArrowDown class="w-3 h-3" />{/if}
+                    {:else}
+                      <ArrowUpDown class="w-3 h-3 opacity-50" />
+                    {/if}
+                  </button>
+                </th>
                 <th class="text-left px-4 py-3 text-sm font-medium text-cream-700">Specialty</th>
                 <th class="text-left px-4 py-3 text-sm font-medium text-cream-700">Contact</th>
-                <th class="text-left px-4 py-3 text-sm font-medium text-cream-700">Last Contact</th>
+                <th class="text-left px-4 py-3 text-sm font-medium text-cream-700">
+                  <button class="flex items-center gap-1 hover:text-navy-800" onclick={() => toggleSort('lastContact')}>
+                    Last Contact
+                    {#if sortBy === 'lastContact'}
+                      {#if sortDirection === 'asc'}<ArrowUp class="w-3 h-3" />{:else}<ArrowDown class="w-3 h-3" />{/if}
+                    {:else}
+                      <ArrowUpDown class="w-3 h-3 opacity-50" />
+                    {/if}
+                  </button>
+                </th>
                 <th class="w-20"></th>
               </tr>
             </thead>

@@ -187,3 +187,87 @@
     border-radius: 3px;
   }
 }
+
+/* Print-friendly styles */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt;
+  }
+
+  /* Hide non-essential elements */
+  header,
+  nav,
+  aside,
+  footer,
+  button:not(.print-visible),
+  .no-print,
+  [role="navigation"],
+  [aria-label="Navigation"] {
+    display: none !important;
+  }
+
+  /* Make cards print-friendly */
+  .card, .card-hover {
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Ensure proper colors for print */
+  h1, h2, h3, h4, h5, h6 {
+    color: black !important;
+  }
+
+  a {
+    color: black !important;
+    text-decoration: underline;
+  }
+
+  /* Table improvements for print */
+  table {
+    width: 100% !important;
+    border-collapse: collapse;
+  }
+
+  th, td {
+    border: 1px solid #ccc !important;
+    padding: 8px !important;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  tr {
+    page-break-inside: avoid;
+  }
+
+  /* Badge printing */
+  .badge {
+    border: 1px solid currentColor !important;
+    background: transparent !important;
+  }
+
+  /* Main content should take full width */
+  main {
+    width: 100% !important;
+    max-width: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Show URLs after links */
+  a[href^="http"]:after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666;
+  }
+
+  /* Page margins */
+  @page {
+    margin: 1cm;
+  }
+}
