@@ -58,20 +58,25 @@
     class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/50 backdrop-blur-sm"
     transition:fade={{ duration: 150 }}
     onclick={handleBackdropClick}
+    onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleClose(); }}
     role="dialog"
     aria-modal="true"
+    aria-labelledby={title ? 'modal-title' : undefined}
+    tabindex="-1"
   >
     <!-- Modal -->
     <div
       class="bg-white rounded-xl shadow-soft-lg w-full {sizeClasses[size]} max-h-[90vh] overflow-hidden flex flex-col"
       transition:scale={{ duration: 150, start: 0.95 }}
       onclick={(e) => e.stopPropagation()}
+      onkeydown={(e) => e.stopPropagation()}
+      role="document"
     >
       <!-- Header -->
       {#if title || closeable}
         <div class="flex items-center justify-between px-6 py-4 border-b border-cream-300">
           {#if title}
-            <h2 class="text-lg font-semibold text-navy-800 font-serif">{title}</h2>
+            <h2 id="modal-title" class="text-lg font-semibold text-navy-800 font-serif">{title}</h2>
           {:else}
             <div></div>
           {/if}

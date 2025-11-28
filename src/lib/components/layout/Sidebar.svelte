@@ -40,13 +40,12 @@
 
 <!-- Mobile backdrop -->
 {#if mobileMenuOpen}
-  <div
-    class="fixed inset-0 z-40 bg-navy-950/50 backdrop-blur-sm lg:hidden"
+  <button
+    type="button"
+    class="fixed inset-0 z-40 bg-navy-950/50 backdrop-blur-sm lg:hidden cursor-default"
     onclick={() => uiStore.closeMobileMenu()}
-    role="button"
-    tabindex="-1"
     aria-label="Close menu"
-  ></div>
+  ></button>
 {/if}
 
 <!-- Sidebar -->
@@ -86,6 +85,7 @@
   <nav class="flex-1 overflow-y-auto py-4 px-3">
     <ul class="space-y-1">
       {#each navigation as item}
+        {@const Icon = item.icon}
         <li>
           <a
             href={item.href}
@@ -95,7 +95,7 @@
                 : 'text-cream-700 hover:bg-cream-200 hover:text-navy-800'}"
             onclick={() => uiStore.closeMobileMenu()}
           >
-            <svelte:component this={item.icon} class="w-5 h-5 flex-shrink-0" />
+            <Icon class="w-5 h-5 flex-shrink-0" />
             {#if sidebarOpen}
               <span class="font-medium">{item.name}</span>
             {/if}
@@ -111,6 +111,7 @@
       {/if}
       <ul class="space-y-1">
         {#each aiNavigation as item}
+          {@const Icon = item.icon}
           <li>
             <a
               href={item.href}
@@ -120,7 +121,7 @@
                   : 'text-cream-700 hover:bg-cream-200 hover:text-navy-800'}"
               onclick={() => uiStore.closeMobileMenu()}
             >
-              <svelte:component this={item.icon} class="w-5 h-5 flex-shrink-0" />
+              <Icon class="w-5 h-5 flex-shrink-0" />
               {#if sidebarOpen}
                 <span class="font-medium">{item.name}</span>
               {/if}

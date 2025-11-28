@@ -672,8 +672,9 @@
         required
       />
       <div>
-        <label class="label">Notes</label>
+        <label for="asset-notes" class="label">Notes</label>
         <textarea
+          id="asset-notes"
           bind:value={assetFormData.notes}
           placeholder="Additional notes..."
           rows="2"
@@ -714,8 +715,9 @@
         required
       />
       <div>
-        <label class="label">Notes</label>
+        <label for="liability-notes" class="label">Notes</label>
         <textarea
+          id="liability-notes"
           bind:value={liabilityFormData.notes}
           placeholder="Additional notes..."
           rows="2"

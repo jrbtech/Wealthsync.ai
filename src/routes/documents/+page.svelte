@@ -391,10 +391,14 @@
     <div class="space-y-4">
       <!-- Drop Zone -->
       <div
+        role="button"
+        tabindex="0"
+        aria-label="Drop zone for file upload"
         class="border-2 border-dashed border-cream-400 rounded-xl p-8 text-center transition-colors
           {uploadFile ? 'border-emerald-500 bg-emerald-50' : 'hover:border-navy-500 hover:bg-cream-100'}"
         ondrop={handleDrop}
         ondragover={(e) => e.preventDefault()}
+        onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { const input = document.querySelector('input[type="file"]') as HTMLInputElement; input?.click(); } }}
       >
         {#if uploadFile}
           <div class="flex items-center justify-center gap-3">
@@ -452,8 +456,9 @@
       />
 
       <div>
-        <label class="label">Notes</label>
+        <label for="document-notes" class="label">Notes</label>
         <textarea
+          id="document-notes"
           bind:value={uploadFormData.notes}
           placeholder="Add notes about this document..."
           rows="2"

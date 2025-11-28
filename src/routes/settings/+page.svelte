@@ -4,7 +4,7 @@
   import { currentUser, currentFamily, authStore } from '$lib/stores/auth';
   import { success, error as showError } from '$lib/stores/ui';
   import { doc, updateDoc } from 'firebase/firestore';
-  import { updatePassword, updateEmail } from 'firebase/auth';
+  import { updatePassword } from 'firebase/auth';
   import { auth, db } from '$lib/firebase/client';
   import { User, Mail, Lock, Building } from 'lucide-svelte';
 

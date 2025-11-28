@@ -397,8 +397,9 @@
       />
 
       <div>
-        <label class="label">Notes</label>
+        <label for="advisor-detail-notes" class="label">Notes</label>
         <textarea
+          id="advisor-detail-notes"
           bind:value={formData.notes}
           placeholder="Additional notes about this advisor..."
           rows="3"

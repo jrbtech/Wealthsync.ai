@@ -18,8 +18,9 @@
 
 <div class="flex flex-col items-center justify-center py-12 px-4 text-center">
   {#if icon}
+    {@const Icon = icon}
     <div class="w-16 h-16 rounded-full bg-cream-200 flex items-center justify-center mb-4">
-      <svelte:component this={icon} class="w-8 h-8 text-cream-500" />
+      <Icon class="w-8 h-8 text-cream-500" />
     </div>
   {/if}
 

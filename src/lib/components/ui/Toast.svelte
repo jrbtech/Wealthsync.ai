@@ -28,12 +28,13 @@
 </script>
 
 {#if toast}
+  {@const Icon = icons[toast.type]}
   <div
     class="fixed bottom-4 right-4 z-50 max-w-sm"
     transition:fly={{ y: 20, duration: 200 }}
   >
     <div class="flex items-start gap-3 px-4 py-3 rounded-lg border shadow-soft-lg {colorClasses[toast.type]}">
-      <svelte:component this={icons[toast.type]} class="w-5 h-5 flex-shrink-0 mt-0.5 {iconColorClasses[toast.type]}" />
+      <Icon class="w-5 h-5 flex-shrink-0 mt-0.5 {iconColorClasses[toast.type]}" />
 
       <p class="flex-1 text-sm font-medium">{toast.message}</p>
 

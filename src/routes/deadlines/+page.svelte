@@ -557,8 +557,9 @@
       </div>
 
       <div>
-        <label class="label">Notes</label>
+        <label for="deadline-notes" class="label">Notes</label>
         <textarea
+          id="deadline-notes"
           bind:value={formData.notes}
           placeholder="Additional details about this deadline..."
           rows="3"

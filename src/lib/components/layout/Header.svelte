@@ -81,13 +81,12 @@
 
         {#if dropdownOpen}
           <!-- Backdrop -->
-          <div
-            class="fixed inset-0 z-40"
+          <button
+            type="button"
+            class="fixed inset-0 z-40 cursor-default"
             onclick={closeDropdown}
-            role="button"
-            tabindex="-1"
             aria-label="Close menu"
-          ></div>
+          ></button>
 
           <!-- Dropdown -->
           <div class="absolute right-0 mt-2 w-56 bg-white rounded-xl border border-cream-300 shadow-soft-lg z-50 overflow-hidden">

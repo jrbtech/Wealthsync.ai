@@ -330,16 +330,16 @@
                 </div>
 
                 <!-- Actions -->
-                <div class="flex items-center gap-1" onclick={(e) => e.preventDefault()}>
+                <div class="flex items-center gap-1">
                   <button
                     class="p-1.5 rounded-lg text-cream-600 hover:text-navy-800 hover:bg-cream-200"
-                    onclick={() => openEditModal(meeting)}
+                    onclick={(e) => { e.preventDefault(); openEditModal(meeting); }}
                   >
                     <Pencil class="w-4 h-4" />
                   </button>
                   <button
                     class="p-1.5 rounded-lg text-cream-600 hover:text-red-600 hover:bg-red-50"
-                    onclick={() => handleDelete(meeting)}
+                    onclick={(e) => { e.preventDefault(); handleDelete(meeting); }}
                   >
                     <Trash2 class="w-4 h-4" />
                   </button>
@@ -377,8 +377,8 @@
       </div>
 
       <div>
-        <label class="label">Advisors Present</label>
-        <div class="flex flex-wrap gap-2 mt-1">
+        <span id="advisors-label" class="label">Advisors Present</span>
+        <div class="flex flex-wrap gap-2 mt-1" role="group" aria-labelledby="advisors-label">
           {#each advisors as advisor}
             <button
               type="button"
@@ -408,8 +408,8 @@
 
       <!-- Action Items -->
       <div>
-        <label class="label">Action Items</label>
-        <div class="space-y-2 mt-1">
+        <span id="action-items-label" class="label">Action Items</span>
+        <div class="space-y-2 mt-1" role="group" aria-labelledby="action-items-label">
           {#each formData.actionItems as item}
             <div class="flex items-center gap-2 p-2 bg-cream-100 rounded-lg">
               <button
