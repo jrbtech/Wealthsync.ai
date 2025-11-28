@@ -64,6 +64,7 @@
     aria-labelledby={title ? 'modal-title' : undefined}
     tabindex="-1"
   >
+    <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
     <!-- Modal -->
     <div
       class="bg-white rounded-xl shadow-soft-lg w-full {sizeClasses[size]} max-h-[90vh] overflow-hidden flex flex-col"

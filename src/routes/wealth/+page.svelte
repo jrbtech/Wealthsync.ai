@@ -20,6 +20,7 @@
   } from '$lib/firebase/services';
   import { success, error as showError } from '$lib/stores/ui';
   import { formatCurrency, formatDate, formatPercent } from '$lib/utils/format';
+  import { exportWealthReport, generatePrintableReport, openPrintableReport } from '$lib/utils/export';
   import {
     Plus,
     Building,
@@ -32,7 +33,9 @@
     Wallet,
     Home,
     PieChart,
-    DollarSign
+    DollarSign,
+    Download,
+    FileText
   } from 'lucide-svelte';
   import type { Entity, Asset, Liability, EntityType, AssetCategory, LiabilityCategory } from '$lib/types';
   import { ENTITY_TYPE_LABELS, ASSET_CATEGORY_LABELS, LIABILITY_CATEGORY_LABELS } from '$lib/types';
@@ -354,6 +357,94 @@
       e.id === entityId ? { ...e, expanded: !e.expanded } : e
     );
   }
+
+  function handleExportCSV() {
+    const exportData = entities.map(e => ({
+      name: e.name,
+      type: ENTITY_TYPE_LABELS[e.type],
+      totalAssets: e.totalAssets,
+      totalLiabilities: e.totalLiabilities,
+      netWorth: e.netWorth
+    }));
+
+    exportWealthReport(exportData, totalNetWorth, 'wealth-report');
+    success('Wealth report exported');
+  }
+
+  function handleExportPDF() {
+    const entityRows = entities.map(e => `
+      <tr>
+        <td>${e.name}</td>
+        <td>${ENTITY_TYPE_LABELS[e.type]}</td>
+        <td class="money">${formatCurrency(e.totalAssets)}</td>
+        <td class="money">${formatCurrency(e.totalLiabilities)}</td>
+        <td class="money">${formatCurrency(e.netWorth)}</td>
+      </tr>
+    `).join('');
+
+    const entityTable = `
+      <table>
+        <thead>
+          <tr>
+            <th>Entity</th>
+            <th>Type</th>
+            <th>Assets</th>
+            <th>Liabilities</th>
+            <th>Net Worth</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${entityRows}
+          <tr style="font-weight: bold; border-top: 2px solid #1a2b4a;">
+            <td>Total</td>
+            <td></td>
+            <td class="money">${formatCurrency(totalAssets)}</td>
+            <td class="money">${formatCurrency(totalLiabilities)}</td>
+            <td class="money">${formatCurrency(totalNetWorth)}</td>
+          </tr>
+        </tbody>
+      </table>
+    `;
+
+    const allocationRows = Object.entries(assetsByCategory)
+      .sort((a, b) => b[1] - a[1])
+      .map(([category, value]) => {
+        const percentage = totalAssets > 0 ? (value / totalAssets) * 100 : 0;
+        return `
+          <tr>
+            <td>${ASSET_CATEGORY_LABELS[category as AssetCategory] || category}</td>
+            <td class="money">${formatCurrency(value)}</td>
+            <td>${percentage.toFixed(1)}%</td>
+          </tr>
+        `;
+      }).join('');
+
+    const allocationTable = `
+      <table>
+        <thead>
+          <tr>
+            <th>Asset Category</th>
+            <th>Value</th>
+            <th>Allocation</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${allocationRows}
+        </tbody>
+      </table>
+    `;
+
+    const html = generatePrintableReport(
+      'Wealth Report',
+      family?.name || 'Family Office',
+      [
+        { title: 'Net Worth Summary', content: entityTable },
+        { title: 'Asset Allocation', content: allocationTable }
+      ]
+    );
+
+    openPrintableReport(html);
+  }
 </script>
 
 <svelte:head>
@@ -442,10 +533,33 @@
     <!-- Entities -->
     <div class="flex items-center justify-between mb-4">
       <h2 class="text-xl font-serif font-semibold text-navy-800">Entities</h2>
-      <Button onclick={() => openEntityModal()}>
-        <Plus class="w-4 h-4" />
-        Add Entity
-      </Button>
+      <div class="flex items-center gap-2">
+        {#if entities.length > 0}
+          <div class="flex items-center border border-cream-300 rounded-lg overflow-hidden">
+            <button
+              class="px-3 py-2 text-sm text-cream-700 hover:bg-cream-100 flex items-center gap-1.5 transition-colors"
+              onclick={handleExportCSV}
+              title="Export to CSV"
+            >
+              <Download class="w-4 h-4" />
+              CSV
+            </button>
+            <div class="w-px h-6 bg-cream-300"></div>
+            <button
+              class="px-3 py-2 text-sm text-cream-700 hover:bg-cream-100 flex items-center gap-1.5 transition-colors"
+              onclick={handleExportPDF}
+              title="Export to PDF"
+            >
+              <FileText class="w-4 h-4" />
+              PDF
+            </button>
+          </div>
+        {/if}
+        <Button onclick={() => openEntityModal()}>
+          <Plus class="w-4 h-4" />
+          Add Entity
+        </Button>
+      </div>
     </div>
 
     {#if entities.length === 0}

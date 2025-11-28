@@ -1,0 +1,119 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+
+    function isFamilyMember(familyId) {
+      return isAuthenticated() &&
+        exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.familyId == familyId;
+    }
+
+    function isPrimaryUser(familyId) {
+      return isAuthenticated() &&
+        exists(/databases/$(database)/documents/families/$(familyId)) &&
+        get(/databases/$(database)/documents/families/$(familyId)).data.primaryUserId == request.auth.uid;
+    }
+
+    // Users collection
+    match /users/{userId} {
+      // Users can read and update their own document
+      allow read: if isOwner(userId);
+      allow update: if isOwner(userId);
+      // Only allow creation during signup (validated by auth)
+      allow create: if isAuthenticated() && isOwner(userId);
+      // Only primary users can delete family members
+      allow delete: if false; // Handled by admin SDK
+    }
+
+    // Families collection
+    match /families/{familyId} {
+      // Family members can read their family document
+      allow read: if isFamilyMember(familyId);
+      // Only primary users can update family settings
+      allow update: if isPrimaryUser(familyId);
+      // Creation handled by admin SDK during signup
+      allow create: if false;
+      allow delete: if false;
+
+      // Advisors subcollection
+      match /advisors/{advisorId} {
+        allow read: if isFamilyMember(familyId);
+        allow create, update, delete: if isFamilyMember(familyId);
+      }
+
+      // Deadlines subcollection
+      match /deadlines/{deadlineId} {
+        allow read: if isFamilyMember(familyId);
+        allow create, update, delete: if isFamilyMember(familyId);
+      }
+
+      // Documents subcollection
+      match /documents/{documentId} {
+        allow read: if isFamilyMember(familyId);
+        allow create, update, delete: if isFamilyMember(familyId);
+      }
+
+      // Entities subcollection (wealth tracking)
+      match /entities/{entityId} {
+        allow read: if isFamilyMember(familyId);
+        allow create, update, delete: if isFamilyMember(familyId);
+
+        // Assets within entities
+        match /assets/{assetId} {
+          allow read: if isFamilyMember(familyId);
+          allow create, update, delete: if isFamilyMember(familyId);
+        }
+
+        // Liabilities within entities
+        match /liabilities/{liabilityId} {
+          allow read: if isFamilyMember(familyId);
+          allow create, update, delete: if isFamilyMember(familyId);
+        }
+      }
+
+      // Meetings subcollection
+      match /meetings/{meetingId} {
+        allow read: if isFamilyMember(familyId);
+        allow create, update, delete: if isFamilyMember(familyId);
+      }
+
+      // Snapshots subcollection (net worth history)
+      match /snapshots/{snapshotId} {
+        allow read: if isFamilyMember(familyId);
+        // Snapshots created by system only
+        allow create, update, delete: if false;
+      }
+
+      // Payments subcollection (Stripe)
+      match /payments/{paymentId} {
+        allow read: if isPrimaryUser(familyId);
+        // Payments managed by webhooks only
+        allow create, update, delete: if false;
+      }
+
+      // Invites subcollection
+      match /invites/{inviteId} {
+        allow read: if isFamilyMember(familyId) ||
+          (isAuthenticated() && resource.data.email == request.auth.token.email);
+        allow create: if isPrimaryUser(familyId);
+        allow update: if isFamilyMember(familyId);
+        allow delete: if isPrimaryUser(familyId);
+      }
+
+      // Activity log subcollection
+      match /activity/{activityId} {
+        allow read: if isFamilyMember(familyId);
+        allow create: if isFamilyMember(familyId);
+        allow update, delete: if false;
+      }
+    }
+  }
+}

@@ -138,7 +138,7 @@
           : 'border-cream-300 bg-white hover:border-cream-400'}"
         onclick={() => (summaryType = type as SummaryType)}
       >
-        <svelte:component this={Icon} class="w-6 h-6 mb-2 {summaryType === type ? 'text-navy-800' : 'text-cream-600'}" />
+        <Icon class="w-6 h-6 mb-2 {summaryType === type ? 'text-navy-800' : 'text-cream-600'}" />
         <h3 class="font-semibold text-navy-800">{info.title}</h3>
         <p class="text-sm text-cream-600 mt-1">{info.description}</p>
       </button>
@@ -223,9 +223,10 @@
           </p>
         </div>
       {:else}
+        {@const OutputIcon = typeInfo[summaryType].icon}
         <div class="flex flex-col items-center justify-center h-64 text-center">
           <div class="p-4 bg-cream-100 rounded-full mb-4">
-            <svelte:component this={typeInfo[summaryType].icon} class="w-8 h-8 text-cream-500" />
+            <OutputIcon class="w-8 h-8 text-cream-500" />
           </div>
           <p class="text-cream-600">
             Enter text on the left and click "Process with AI" to see results here

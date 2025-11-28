@@ -193,9 +193,10 @@
           { icon: Shield, text: "Sensitive documents scattered across email, Dropbox, and file cabinets" },
           { icon: PieChart, text: "Paying $100K-500K/year just to coordinate everyone" }
         ] as problem}
+          {@const ProblemIcon = problem.icon}
           <div class="flex items-start gap-4 p-6 rounded-xl bg-red-50 border border-red-100">
             <div class="flex-shrink-0 p-2 bg-red-100 rounded-lg">
-              <svelte:component this={problem.icon} class="w-5 h-5 text-red-600" />
+              <ProblemIcon class="w-5 h-5 text-red-600" />
             </div>
             <p class="text-cream-800">{problem.text}</p>
           </div>
@@ -218,9 +219,10 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {#each features as feature}
+          {@const FeatureIcon = feature.icon}
           <Card variant="hover" class="h-full">
             <div class="p-2 bg-navy-100 rounded-lg w-fit mb-4">
-              <svelte:component this={feature.icon} class="w-6 h-6 text-navy-800" />
+              <FeatureIcon class="w-6 h-6 text-navy-800" />
             </div>
             <h3 class="text-xl font-serif font-semibold text-navy-800 mb-2">
               {feature.title}

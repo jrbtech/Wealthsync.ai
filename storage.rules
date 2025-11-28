@@ -1,0 +1,35 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isValidFileType() {
+      return request.resource.contentType.matches('application/pdf') ||
+             request.resource.contentType.matches('image/.*') ||
+             request.resource.contentType.matches('application/msword') ||
+             request.resource.contentType.matches('application/vnd.openxmlformats-officedocument.*') ||
+             request.resource.contentType.matches('application/vnd.ms-excel') ||
+             request.resource.contentType.matches('text/plain');
+    }
+
+    function isValidFileSize() {
+      // Max 50MB
+      return request.resource.size < 50 * 1024 * 1024;
+    }
+
+    // Family documents storage
+    match /families/{familyId}/{allPaths=**} {
+      // Allow read/write only if user belongs to the family
+      // Note: For production, you'd want to verify family membership
+      // This is a simplified rule - use Cloud Functions or check Firestore
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated() &&
+                      isValidFileType() &&
+                      isValidFileSize();
+      allow delete: if isAuthenticated();
+    }
+  }
+}

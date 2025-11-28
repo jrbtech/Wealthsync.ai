@@ -23,6 +23,10 @@ function createAuthStore() {
     subscribe,
     setUser: (user: User | null) => update((state) => ({ ...state, user, loading: false })),
     setFamily: (family: Family | null) => update((state) => ({ ...state, family })),
+    updateFamily: (updates: Partial<Family>) => update((state) => ({
+      ...state,
+      family: state.family ? { ...state.family, ...updates } : null
+    })),
     setLoading: (loading: boolean) => update((state) => ({ ...state, loading })),
     setInitialized: () => update((state) => ({ ...state, initialized: true, loading: false })),
     reset: () => set({ ...initialState, loading: false, initialized: true })

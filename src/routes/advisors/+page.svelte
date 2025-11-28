@@ -8,6 +8,7 @@
   import { getAdvisors, createAdvisor, updateAdvisor, deleteAdvisor, logActivity } from '$lib/firebase/services';
   import { success, error as showError } from '$lib/stores/ui';
   import { formatDate, getDaysSince, formatPhone } from '$lib/utils/format';
+  import { exportAdvisors } from '$lib/utils/export';
   import {
     Plus,
     Search,
@@ -20,7 +21,8 @@
     MoreVertical,
     Pencil,
     Trash2,
-    AlertCircle
+    AlertCircle,
+    Download
   } from 'lucide-svelte';
   import type { Advisor, AdvisorSpecialty } from '$lib/types';
   import { ADVISOR_SPECIALTY_LABELS } from '$lib/types';
@@ -189,6 +191,11 @@
       showError('Failed to remove advisor');
     }
   }
+
+  function handleExportCSV() {
+    exportAdvisors(advisors, ADVISOR_SPECIALTY_LABELS);
+    success('Advisors exported');
+  }
 </script>
 
 <svelte:head>
@@ -221,6 +228,16 @@
       </div>
 
       <div class="flex items-center gap-2">
+        {#if advisors.length > 0}
+          <button
+            class="px-3 py-2 text-sm text-cream-700 border border-cream-300 rounded-lg hover:bg-cream-100 flex items-center gap-1.5 transition-colors"
+            onclick={handleExportCSV}
+            title="Export to CSV"
+          >
+            <Download class="w-4 h-4" />
+            Export
+          </button>
+        {/if}
         <div class="flex border border-cream-300 rounded-lg overflow-hidden">
           <button
             class="p-2 transition-colors {viewMode === 'grid' ? 'bg-navy-800 text-white' : 'bg-white text-cream-600 hover:bg-cream-100'}"

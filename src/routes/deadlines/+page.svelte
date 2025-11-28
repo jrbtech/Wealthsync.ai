@@ -7,6 +7,7 @@
   import { getDeadlines, getAdvisors, createDeadline, updateDeadline, deleteDeadline, logActivity } from '$lib/firebase/services';
   import { success, error as showError } from '$lib/stores/ui';
   import { formatDate, getDaysUntil } from '$lib/utils/format';
+  import { exportDeadlines } from '$lib/utils/export';
   import {
     format,
     startOfMonth,
@@ -14,10 +15,10 @@
     eachDayOfInterval,
     isSameMonth,
     isSameDay,
-    addMonths,
-    subMonths,
     startOfWeek,
-    endOfWeek
+    endOfWeek,
+    addMonths,
+    subMonths
   } from 'date-fns';
   import {
     Plus,
@@ -29,7 +30,8 @@
     CheckCircle,
     AlertCircle,
     Pencil,
-    Trash2
+    Trash2,
+    Download
   } from 'lucide-svelte';
   import type { Deadline, DeadlineCategory, DeadlineStatus, RecurrenceType, Advisor } from '$lib/types';
   import { DEADLINE_CATEGORY_LABELS, RECURRENCE_LABELS } from '$lib/types';
@@ -277,6 +279,20 @@
       showError('Failed to delete deadline');
     }
   }
+
+  function handleExportCSV() {
+    const exportData = deadlines.map(d => ({
+      title: d.title,
+      category: d.category,
+      dueDate: d.dueDate,
+      status: d.status,
+      recurrence: RECURRENCE_LABELS[d.recurrence],
+      notes: d.notes
+    }));
+
+    exportDeadlines(exportData, DEADLINE_CATEGORY_LABELS);
+    success('Deadlines exported');
+  }
 </script>
 
 <svelte:head>
@@ -305,6 +321,16 @@
       </div>
 
       <div class="flex items-center gap-2">
+        {#if deadlines.length > 0}
+          <button
+            class="px-3 py-2 text-sm text-cream-700 border border-cream-300 rounded-lg hover:bg-cream-100 flex items-center gap-1.5 transition-colors"
+            onclick={handleExportCSV}
+            title="Export to CSV"
+          >
+            <Download class="w-4 h-4" />
+            Export
+          </button>
+        {/if}
         <div class="flex border border-cream-300 rounded-lg overflow-hidden">
           <button
             class="p-2 transition-colors {viewMode === 'list' ? 'bg-navy-800 text-white' : 'bg-white text-cream-600 hover:bg-cream-100'}"
@@ -433,6 +459,7 @@
             {@const status = getDeadlineStatusInfo(deadline)}
             {@const days = getDaysUntil(deadline.dueDate)}
             {@const advisor = deadline.advisorId ? advisors.find(a => a.id === deadline.advisorId) : null}
+            {@const StatusIcon = status.icon}
 
             <Card variant="hover" padding="none">
               <div class="flex items-center gap-4 p-4">
@@ -482,7 +509,7 @@
                 <!-- Status -->
                 <div class="flex-shrink-0">
                   <Badge variant={status.color as any}>
-                    <svelte:component this={status.icon} class="w-3 h-3 mr-1" />
+                    <StatusIcon class="w-3 h-3 mr-1" />
                     {#if deadline.status !== 'completed' && days !== null}
                       {days === 0 ? 'Today' : days < 0 ? `${Math.abs(days)}d overdue` : `${days}d`}
                     {:else}

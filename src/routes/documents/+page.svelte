@@ -254,12 +254,13 @@
 
             {#each Object.entries(DOCUMENT_FOLDER_LABELS) as [value, label]}
               {@const count = documents.filter(d => d.folder === value).length}
+              {@const FolderIcon = folderIcons[value] || File}
               <button
                 class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors
                   {selectedFolder === value ? 'bg-navy-800 text-white' : 'text-cream-700 hover:bg-cream-200'}"
                 onclick={() => (selectedFolder = value as DocumentFolder)}
               >
-                <svelte:component this={folderIcons[value] || File} class="w-5 h-5" />
+                <FolderIcon class="w-5 h-5" />
                 <span class="truncate">{label}</span>
                 {#if count > 0}
                   <span class="ml-auto text-sm opacity-70">{count}</span>
@@ -314,14 +315,14 @@
         {:else}
           <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             {#each filteredDocuments as doc}
-              {@const FileIcon = getFileIcon(doc.mimeType)}
+              {@const DocFileIcon = getFileIcon(doc.mimeType)}
               {@const advisor = doc.advisorId ? advisors.find(a => a.id === doc.advisorId) : null}
 
               <Card variant="hover" padding="none" class="group">
                 <div class="p-4">
                   <div class="flex items-start gap-3">
                     <div class="flex-shrink-0 p-3 bg-cream-100 rounded-lg">
-                      <svelte:component this={FileIcon} class="w-6 h-6 text-cream-600" />
+                      <DocFileIcon class="w-6 h-6 text-cream-600" />
                     </div>
                     <div class="flex-1 min-w-0">
                       <h4 class="font-medium text-navy-800 truncate" title={doc.filename}>

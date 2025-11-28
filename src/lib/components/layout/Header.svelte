@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { Menu, Bell, Search, LogOut, User, CreditCard } from 'lucide-svelte';
+  import { Menu, Search, LogOut, User, CreditCard, Command } from 'lucide-svelte';
   import { uiStore } from '$lib/stores/ui';
   import { authStore, currentUser } from '$lib/stores/auth';
   import { signOut } from '$lib/firebase/auth';
   import { goto } from '$app/navigation';
-  import { Avatar } from '$lib/components/ui';
+  import { Avatar, CommandPalette, NotificationCenter } from '$lib/components/ui';
   import { error } from '$lib/stores/ui';
 
   interface Props {
@@ -17,6 +17,7 @@
   const user = $derived($currentUser);
 
   let dropdownOpen = $state(false);
+  let searchOpen = $state(false);
 
   async function handleSignOut() {
     try {
@@ -57,15 +58,19 @@
     <!-- Right side -->
     <div class="flex items-center gap-2">
       <!-- Search -->
-      <button class="p-2 rounded-lg text-cream-600 hover:text-navy-800 hover:bg-cream-200">
-        <Search class="w-5 h-5" />
+      <button
+        class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-cream-600 hover:text-navy-800 hover:bg-cream-200 border border-cream-300"
+        onclick={() => searchOpen = true}
+      >
+        <Search class="w-4 h-4" />
+        <span class="hidden md:inline text-sm">Search...</span>
+        <kbd class="hidden md:inline-flex items-center gap-0.5 px-1.5 py-0.5 bg-cream-100 rounded text-xs font-mono">
+          <Command class="w-3 h-3" />K
+        </kbd>
       </button>
 
       <!-- Notifications -->
-      <button class="p-2 rounded-lg text-cream-600 hover:text-navy-800 hover:bg-cream-200 relative">
-        <Bell class="w-5 h-5" />
-        <span class="absolute top-1 right-1 w-2 h-2 bg-gold-500 rounded-full"></span>
-      </button>
+      <NotificationCenter />
 
       <!-- User menu -->
       <div class="relative">
@@ -130,3 +135,6 @@
     </div>
   </div>
 </header>
+
+<!-- Command Palette / Global Search -->
+<CommandPalette bind:open={searchOpen} />

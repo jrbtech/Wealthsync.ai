@@ -40,6 +40,28 @@ function convertTimestamps<T>(data: DocumentData): T {
   return result as T;
 }
 
+// ============ FAMILY ============
+
+export async function updateFamily(familyId: string, data: Record<string, any>): Promise<void> {
+  const docRef = doc(db, 'families', familyId);
+  await updateDoc(docRef, {
+    ...data,
+    updatedAt: serverTimestamp()
+  });
+}
+
+export async function getFamily(familyId: string): Promise<any | null> {
+  const docRef = doc(db, 'families', familyId);
+  const snapshot = await getDoc(docRef);
+
+  if (!snapshot.exists()) return null;
+
+  return {
+    id: snapshot.id,
+    ...convertTimestamps(snapshot.data())
+  };
+}
+
 // ============ ADVISORS ============
 
 export async function getAdvisors(familyId: string): Promise<Advisor[]> {
