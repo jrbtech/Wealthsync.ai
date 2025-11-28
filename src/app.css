@@ -1,159 +1,304 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @import "tailwindcss";
 
 @theme {
-  /* Navy colors */
-  --color-navy-50: #f0f3f7;
-  --color-navy-100: #e1e7ef;
-  --color-navy-200: #c3cfdf;
-  --color-navy-300: #a5b7cf;
-  --color-navy-400: #879fbf;
-  --color-navy-500: #6987af;
-  --color-navy-600: #4b6f9f;
-  --color-navy-700: #2d578f;
-  --color-navy-800: #1a2b4a;
-  --color-navy-900: #0f1929;
-  --color-navy-950: #070c14;
+  /* Primary - Deep Navy (premium dark) */
+  --color-navy-50: #f8fafc;
+  --color-navy-100: #f1f5f9;
+  --color-navy-200: #e2e8f0;
+  --color-navy-300: #cbd5e1;
+  --color-navy-400: #94a3b8;
+  --color-navy-500: #64748b;
+  --color-navy-600: #475569;
+  --color-navy-700: #334155;
+  --color-navy-800: #1e293b;
+  --color-navy-900: #0f172a;
+  --color-navy-950: #020617;
 
-  /* Gold colors */
-  --color-gold-50: #faf8f3;
-  --color-gold-100: #f5f1e7;
-  --color-gold-200: #ebe3cf;
-  --color-gold-300: #e1d5b7;
-  --color-gold-400: #d7c79f;
-  --color-gold-500: #c9a962;
-  --color-gold-600: #b8923e;
-  --color-gold-700: #967530;
-  --color-gold-800: #745822;
-  --color-gold-900: #523b14;
-  --color-gold-950: #301f06;
+  /* Accent - Premium Teal/Cyan (Masttro-inspired) */
+  --color-accent-50: #ecfeff;
+  --color-accent-100: #cffafe;
+  --color-accent-200: #a5f3fc;
+  --color-accent-300: #67e8f9;
+  --color-accent-400: #22d3ee;
+  --color-accent-500: #06b6d4;
+  --color-accent-600: #0891b2;
+  --color-accent-700: #0e7490;
+  --color-accent-800: #155e75;
+  --color-accent-900: #164e63;
+  --color-accent-950: #083344;
 
-  /* Cream colors */
+  /* Gold - Warm Accent (for highlights) */
+  --color-gold-50: #fffbeb;
+  --color-gold-100: #fef3c7;
+  --color-gold-200: #fde68a;
+  --color-gold-300: #fcd34d;
+  --color-gold-400: #fbbf24;
+  --color-gold-500: #f59e0b;
+  --color-gold-600: #d97706;
+  --color-gold-700: #b45309;
+  --color-gold-800: #92400e;
+  --color-gold-900: #78350f;
+  --color-gold-950: #451a03;
+
+  /* Neutral - Warm Cream (refined) */
   --color-cream-50: #ffffff;
-  --color-cream-100: #fcfbfa;
-  --color-cream-200: #f8f7f5;
-  --color-cream-300: #f0efed;
-  --color-cream-400: #e8e7e5;
-  --color-cream-500: #d0cfcd;
-  --color-cream-600: #a8a7a5;
-  --color-cream-700: #80807e;
-  --color-cream-800: #585856;
-  --color-cream-900: #30302e;
-  --color-cream-950: #181817;
+  --color-cream-100: #fefdfb;
+  --color-cream-200: #faf9f7;
+  --color-cream-300: #f5f4f1;
+  --color-cream-400: #e8e6e1;
+  --color-cream-500: #d4d2cd;
+  --color-cream-600: #a3a19c;
+  --color-cream-700: #78766f;
+  --color-cream-800: #52514c;
+  --color-cream-900: #2d2c28;
+  --color-cream-950: #1a1918;
 
-  /* Font families */
-  --font-serif: 'Cormorant Garamond', Georgia, serif;
-  --font-sans: 'DM Sans', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', Menlo, monospace;
+  /* Success */
+  --color-success-50: #f0fdf4;
+  --color-success-500: #22c55e;
+  --color-success-600: #16a34a;
 
-  /* Shadows */
-  --shadow-soft: 0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04);
-  --shadow-soft-lg: 0 10px 40px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  /* Font families - Premium typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+
+  /* Refined shadows */
+  --shadow-soft: 0 1px 3px rgba(0, 0, 0, 0.04), 0 6px 16px rgba(0, 0, 0, 0.04);
+  --shadow-soft-lg: 0 4px 6px rgba(0, 0, 0, 0.02), 0 12px 32px rgba(0, 0, 0, 0.06);
+  --shadow-glow: 0 0 40px rgba(6, 182, 212, 0.15);
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.04);
+  --shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+
+  /* Transitions */
+  --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @layer base {
   html {
-    @apply antialiased;
+    @apply antialiased scroll-smooth;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   body {
-    @apply bg-cream-200 text-cream-950 font-sans;
+    @apply bg-cream-100 text-navy-900 font-sans leading-relaxed;
+    letter-spacing: -0.01em;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif font-semibold text-navy-800;
+    font-family: var(--font-display);
+    @apply font-semibold text-navy-900 tracking-tight;
+  }
+
+  h1 { @apply text-4xl lg:text-5xl font-bold; letter-spacing: -0.025em; }
+  h2 { @apply text-2xl lg:text-3xl font-bold; letter-spacing: -0.02em; }
+  h3 { @apply text-xl lg:text-2xl font-semibold; }
+  h4 { @apply text-lg font-semibold; }
+
+  /* Premium selection color */
+  ::selection {
+    background-color: rgba(6, 182, 212, 0.2);
+    color: inherit;
+  }
+
+  /* Smooth focus transitions */
+  :focus-visible {
+    outline: 2px solid var(--color-accent-500);
+    outline-offset: 2px;
+    transition: outline-offset 0.1s ease;
   }
 }
 
 @layer components {
-  /* Button variants */
-  .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  /* Premium Button System - Pill-shaped like Masttro */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2.5 rounded-full px-5 py-2.5 text-sm font-medium
+           transition-all duration-300 ease-out
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none
+           active:scale-[0.98]
+           bg-navy-900 text-white
+           hover:bg-navy-800 hover:shadow-lg hover:-translate-y-0.5
+           focus-visible:ring-accent-500;
   }
 
-  .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed bg-navy-800 text-white hover:bg-navy-700 focus:ring-navy-500;
+  .btn-accent {
+    @apply inline-flex items-center justify-center gap-2.5 rounded-full px-5 py-2.5 text-sm font-medium
+           transition-all duration-300 ease-out
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none
+           active:scale-[0.98]
+           bg-accent-500 text-navy-950 font-semibold
+           hover:bg-accent-400 hover:shadow-lg hover:shadow-accent-500/25 hover:-translate-y-0.5
+           focus-visible:ring-accent-400;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed bg-cream-100 text-navy-800 border border-cream-400 hover:bg-cream-300 focus:ring-navy-500;
+    @apply inline-flex items-center justify-center gap-2.5 rounded-full px-5 py-2.5 text-sm font-medium
+           transition-all duration-300 ease-out
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none
+           active:scale-[0.98]
+           bg-white text-navy-800 border border-cream-400
+           hover:bg-cream-50 hover:border-cream-500 hover:shadow-md
+           focus-visible:ring-navy-500;
   }
 
   .btn-gold {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed bg-gold-500 text-navy-900 hover:bg-gold-400 focus:ring-gold-500;
+    @apply inline-flex items-center justify-center gap-2.5 rounded-full px-5 py-2.5 text-sm font-medium
+           transition-all duration-300 ease-out
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none
+           active:scale-[0.98]
+           bg-gradient-to-r from-gold-400 to-gold-500 text-navy-950 font-semibold
+           hover:from-gold-300 hover:to-gold-400 hover:shadow-lg hover:shadow-gold-500/25
+           focus-visible:ring-gold-400;
   }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed bg-transparent text-navy-700 hover:bg-cream-300 focus:ring-navy-500;
+    @apply inline-flex items-center justify-center gap-2.5 rounded-full px-5 py-2.5 text-sm font-medium
+           transition-all duration-300 ease-out
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none
+           active:scale-[0.98]
+           bg-transparent text-navy-600
+           hover:bg-navy-50 hover:text-navy-900
+           focus-visible:ring-navy-500;
   }
 
   .btn-danger {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
+    @apply inline-flex items-center justify-center gap-2.5 rounded-full px-5 py-2.5 text-sm font-medium
+           transition-all duration-300 ease-out
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none
+           active:scale-[0.98]
+           bg-red-500 text-white
+           hover:bg-red-600 hover:shadow-lg
+           focus-visible:ring-red-400;
   }
 
-  /* Input styles */
+  /* Input styles - Refined */
   .input {
-    @apply block w-full rounded-lg border border-cream-400 bg-white px-4 py-2.5 text-navy-800 placeholder-cream-600 transition-colors focus:border-navy-500 focus:ring-2 focus:ring-navy-500/20 focus:outline-none;
+    @apply block w-full rounded-xl border border-cream-400 bg-white
+           px-4 py-3 text-navy-900 placeholder-navy-400
+           transition-all duration-200
+           focus:border-accent-500 focus:ring-4 focus:ring-accent-500/10 focus:outline-none
+           hover:border-cream-500;
   }
 
   .label {
-    @apply block text-sm font-medium text-navy-700 mb-1.5;
+    @apply block text-sm font-medium text-navy-700 mb-2;
   }
 
-  /* Card styles */
+  /* Card styles - Premium feel */
   .card {
-    @apply bg-white rounded-xl border border-cream-300 shadow-soft;
+    @apply bg-white rounded-2xl border border-cream-300/80 shadow-card;
   }
 
   .card-hover {
-    @apply bg-white rounded-xl border border-cream-300 shadow-soft transition-shadow hover:shadow-soft-lg;
+    @apply bg-white rounded-2xl border border-cream-300/80 shadow-card
+           transition-all duration-300 ease-out
+           hover:shadow-elevated hover:border-cream-400 hover:-translate-y-0.5;
   }
 
-  /* Badge styles */
-  .badge {
-    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+  .card-dark {
+    @apply bg-gradient-to-br from-navy-900 via-navy-900 to-navy-950
+           rounded-2xl border border-navy-700/50 text-white;
   }
 
+  .card-accent {
+    @apply bg-gradient-to-br from-accent-500 to-accent-600
+           rounded-2xl border-0 text-navy-950;
+  }
+
+  /* Badge styles - Refined */
   .badge-navy {
-    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-navy-100 text-navy-800;
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold tracking-wide bg-navy-100 text-navy-700;
+  }
+
+  .badge-accent {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold tracking-wide bg-accent-100 text-accent-800;
   }
 
   .badge-gold {
-    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-gold-100 text-gold-800;
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold tracking-wide bg-gold-100 text-gold-800;
   }
 
   .badge-emerald {
-    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-emerald-100 text-emerald-800;
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold tracking-wide bg-emerald-100 text-emerald-700;
   }
 
   .badge-red {
-    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-red-100 text-red-800;
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold tracking-wide bg-red-100 text-red-700;
   }
 
-  /* Specialty colors */
+  .badge-outline {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold tracking-wide bg-transparent border border-current;
+  }
+
+  /* Specialty colors - Refined */
   .specialty-cpa {
-    @apply bg-blue-100 text-blue-800;
+    @apply bg-blue-50 text-blue-700 border border-blue-200;
   }
 
   .specialty-estate_attorney {
-    @apply bg-purple-100 text-purple-800;
+    @apply bg-purple-50 text-purple-700 border border-purple-200;
   }
 
   .specialty-wealth_manager {
-    @apply bg-emerald-100 text-emerald-800;
+    @apply bg-emerald-50 text-emerald-700 border border-emerald-200;
   }
 
   .specialty-insurance {
-    @apply bg-orange-100 text-orange-800;
+    @apply bg-orange-50 text-orange-700 border border-orange-200;
   }
 
   .specialty-banker {
-    @apply bg-cyan-100 text-cyan-800;
+    @apply bg-cyan-50 text-cyan-700 border border-cyan-200;
   }
 
   .specialty-other {
-    @apply bg-gray-100 text-gray-800;
+    @apply bg-gray-50 text-gray-600 border border-gray-200;
+  }
+
+  /* Premium Glass Effect */
+  .glass {
+    @apply bg-white/70 backdrop-blur-xl border border-white/20;
+  }
+
+  .glass-dark {
+    @apply bg-navy-950/80 backdrop-blur-xl border border-white/10;
+  }
+
+  /* Gradient text */
+  .text-gradient {
+    @apply bg-gradient-to-r from-accent-500 via-accent-400 to-accent-600 bg-clip-text text-transparent;
+  }
+
+  /* Animated underline for links */
+  .link-underline {
+    @apply relative inline-block;
+  }
+  .link-underline::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-full h-0.5 bg-accent-500 origin-left scale-x-0 transition-transform duration-300;
+  }
+  .link-underline:hover::after {
+    @apply scale-x-100;
+  }
+
+  /* Stats/metric display */
+  .stat-value {
+    @apply text-4xl lg:text-5xl font-bold tracking-tight;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stat-label {
+    @apply text-sm font-medium text-navy-500 uppercase tracking-wider;
   }
 }
 

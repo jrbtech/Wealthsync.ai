@@ -33,7 +33,8 @@
     ChevronRight,
     BarChart3,
     PiggyBank,
-    Shield
+    Shield,
+    Zap
   } from 'lucide-svelte';
   import type { Advisor, Deadline, Activity, Entity, Asset, Liability } from '$lib/types';
   import { ADVISOR_SPECIALTY_LABELS, DEADLINE_CATEGORY_LABELS, ASSET_CATEGORY_LABELS } from '$lib/types';
@@ -58,11 +59,11 @@
   let assetAllocation = $state<{ category: string; value: number; color: string }[]>([]);
 
   const categoryColors: Record<string, string> = {
-    cash: '#059669',
-    investments: '#1a2b4a',
-    real_estate: '#c9a962',
-    alternatives: '#7c3aed',
-    other: '#8b8680'
+    cash: '#22c55e',
+    investments: '#0f172a',
+    real_estate: '#f59e0b',
+    alternatives: '#8b5cf6',
+    other: '#64748b'
   };
 
   onMount(async () => {
@@ -197,47 +198,52 @@
       </div>
     </div>
   {:else}
-    <!-- Welcome Section -->
-    <div class="mb-8">
-      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <!-- Welcome Section - Premium Design -->
+    <div class="mb-10">
+      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
         <div>
-          <h1 class="text-3xl font-serif font-bold text-navy-800">
+          <p class="text-sm font-medium text-accent-600 mb-1">{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</p>
+          <h1 class="text-3xl lg:text-4xl font-bold text-navy-900 tracking-tight">
             {greeting()}, {user?.name?.split(' ')[0] || 'there'}
           </h1>
-          <p class="text-cream-600 mt-1">
-            Here's what's happening with {family?.name || 'your family office'} today.
+          <p class="text-navy-500 mt-2 text-lg">
+            Here's your {family?.name || 'family office'} overview.
           </p>
         </div>
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-3">
           <Button href="/ai/summarize" variant="secondary">
             <Sparkles class="w-4 h-4" />
             AI Assistant
           </Button>
-          <Button href="/wealth">
+          <Button href="/wealth" variant="primary">
             <BarChart3 class="w-4 h-4" />
             Full Report
           </Button>
         </div>
       </div>
 
-      <!-- Alerts -->
+      <!-- Alerts - Premium Design -->
       {#if overdueCount > 0 || needsAttentionAdvisors.length > 0}
-        <div class="mt-4 p-4 bg-orange-50 border border-orange-200 rounded-xl">
-          <div class="flex items-start gap-3">
-            <AlertCircle class="w-5 h-5 text-orange-600 flex-shrink-0 mt-0.5" />
+        <div class="mt-6 p-5 bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-200/50 rounded-2xl">
+          <div class="flex items-start gap-4">
+            <div class="p-2.5 bg-orange-100 rounded-xl">
+              <AlertCircle class="w-5 h-5 text-orange-600" />
+            </div>
             <div class="flex-1">
-              <h4 class="font-medium text-orange-800">Needs Your Attention</h4>
-              <ul class="mt-1 text-sm text-orange-700 space-y-1">
+              <h4 class="font-semibold text-orange-900">Needs Your Attention</h4>
+              <ul class="mt-2 text-sm text-orange-800 space-y-1.5">
                 {#if overdueCount > 0}
-                  <li>
-                    <a href="/deadlines?filter=overdue" class="hover:underline">
+                  <li class="flex items-center gap-2">
+                    <div class="w-1.5 h-1.5 rounded-full bg-orange-500"></div>
+                    <a href="/deadlines?filter=overdue" class="hover:underline font-medium">
                       {overdueCount} overdue deadline{overdueCount > 1 ? 's' : ''}
                     </a>
                   </li>
                 {/if}
                 {#if needsAttentionAdvisors.length > 0}
-                  <li>
-                    <a href="/advisors" class="hover:underline">
+                  <li class="flex items-center gap-2">
+                    <div class="w-1.5 h-1.5 rounded-full bg-orange-500"></div>
+                    <a href="/advisors" class="hover:underline font-medium">
                       {needsAttentionAdvisors.length} advisor{needsAttentionAdvisors.length > 1 ? 's' : ''} not contacted in 60+ days
                     </a>
                   </li>
@@ -249,124 +255,134 @@
       {/if}
     </div>
 
-    <!-- Net Worth Hero Card -->
-    <Card class="bg-gradient-to-br from-navy-800 via-navy-900 to-navy-950 text-white border-0 mb-8 overflow-hidden relative">
-      <div class="absolute top-0 right-0 w-96 h-96 bg-gold-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+    <!-- Net Worth Hero Card - Premium Masttro-inspired -->
+    <div class="bg-gradient-to-br from-navy-900 via-navy-950 to-navy-950 text-white rounded-3xl mb-10 overflow-hidden relative p-8 lg:p-10">
+      <!-- Decorative elements -->
+      <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-accent-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
+      <div class="absolute bottom-0 left-0 w-64 h-64 bg-accent-400/5 rounded-full blur-2xl translate-y-1/2 -translate-x-1/4"></div>
+
       <div class="relative">
-        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
           <div>
-            <p class="text-navy-300 text-sm font-medium mb-1">Total Net Worth</p>
-            <p class="text-4xl lg:text-5xl font-bold font-mono tracking-tight">
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-white/10 rounded-full mb-4 backdrop-blur-sm">
+              <div class="w-2 h-2 rounded-full bg-accent-400 animate-pulse"></div>
+              <span class="text-xs font-medium text-white/80">Live Portfolio</span>
+            </div>
+            <p class="text-navy-400 text-sm font-medium uppercase tracking-wider mb-2">Total Net Worth</p>
+            <p class="text-5xl lg:text-6xl font-bold tracking-tight" style="font-variant-numeric: tabular-nums;">
               {formatCurrency(totalNetWorth)}
             </p>
-            <div class="flex items-center gap-4 mt-3">
-              <div class="flex items-center gap-1">
-                {#if netWorthChange > 0}
-                  <div class="flex items-center gap-1 px-2 py-1 bg-emerald-500/20 rounded-full">
-                    <ArrowUpRight class="w-4 h-4 text-emerald-400" />
-                    <span class="text-sm font-medium text-emerald-400">+{netWorthChange}%</span>
-                  </div>
-                {:else}
-                  <div class="flex items-center gap-1 px-2 py-1 bg-red-500/20 rounded-full">
-                    <ArrowDownRight class="w-4 h-4 text-red-400" />
-                    <span class="text-sm font-medium text-red-400">{netWorthChange}%</span>
-                  </div>
-                {/if}
-                <span class="text-sm text-navy-300">vs last month</span>
-              </div>
+            <div class="flex items-center gap-4 mt-4">
+              {#if netWorthChange > 0}
+                <div class="flex items-center gap-2 px-3 py-1.5 bg-emerald-500/20 rounded-full border border-emerald-500/30">
+                  <ArrowUpRight class="w-4 h-4 text-emerald-400" />
+                  <span class="text-sm font-semibold text-emerald-400">+{netWorthChange}%</span>
+                </div>
+              {:else}
+                <div class="flex items-center gap-2 px-3 py-1.5 bg-red-500/20 rounded-full border border-red-500/30">
+                  <ArrowDownRight class="w-4 h-4 text-red-400" />
+                  <span class="text-sm font-semibold text-red-400">{netWorthChange}%</span>
+                </div>
+              {/if}
+              <span class="text-sm text-navy-400">vs last month</span>
             </div>
           </div>
 
-          <div class="flex gap-6 text-sm">
-            <div>
-              <p class="text-navy-400">Assets</p>
-              <p class="text-xl font-semibold font-mono text-emerald-400">
+          <div class="flex gap-8">
+            <div class="text-center">
+              <div class="w-16 h-16 bg-emerald-500/20 rounded-2xl flex items-center justify-center mb-3 border border-emerald-500/30">
+                <TrendingUp class="w-7 h-7 text-emerald-400" />
+              </div>
+              <p class="text-xl lg:text-2xl font-bold text-white" style="font-variant-numeric: tabular-nums;">
                 {formatCurrency(totalAssets, { compact: true })}
               </p>
+              <p class="text-xs text-navy-400 uppercase tracking-wider mt-1">Assets</p>
             </div>
-            <div>
-              <p class="text-navy-400">Liabilities</p>
-              <p class="text-xl font-semibold font-mono text-red-400">
+            <div class="text-center">
+              <div class="w-16 h-16 bg-red-500/20 rounded-2xl flex items-center justify-center mb-3 border border-red-500/30">
+                <TrendingDown class="w-7 h-7 text-red-400" />
+              </div>
+              <p class="text-xl lg:text-2xl font-bold text-white" style="font-variant-numeric: tabular-nums;">
                 {formatCurrency(totalLiabilities, { compact: true })}
               </p>
+              <p class="text-xs text-navy-400 uppercase tracking-wider mt-1">Liabilities</p>
             </div>
-            <div>
-              <p class="text-navy-400">Entities</p>
-              <p class="text-xl font-semibold font-mono">{entityCount}</p>
+            <div class="text-center">
+              <div class="w-16 h-16 bg-accent-500/20 rounded-2xl flex items-center justify-center mb-3 border border-accent-500/30">
+                <Building class="w-7 h-7 text-accent-400" />
+              </div>
+              <p class="text-xl lg:text-2xl font-bold text-white">{entityCount}</p>
+              <p class="text-xs text-navy-400 uppercase tracking-wider mt-1">Entities</p>
             </div>
           </div>
         </div>
       </div>
-    </Card>
+    </div>
 
-    <!-- Stats Grid -->
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+    <!-- Stats Grid - Premium Cards -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
       <a href="/advisors" class="group">
-        <Card variant="hover" class="h-full">
-          <div class="flex items-center gap-3">
-            <div class="p-2.5 bg-blue-100 rounded-xl group-hover:bg-blue-200 transition-colors">
+        <div class="h-full bg-white rounded-2xl border border-cream-200 p-5 transition-all duration-300 hover:shadow-elevated hover:-translate-y-1 hover:border-blue-200">
+          <div class="flex items-center justify-between mb-4">
+            <div class="p-3 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl group-hover:from-blue-100 group-hover:to-blue-200 transition-colors">
               <Users class="w-5 h-5 text-blue-600" />
             </div>
-            <div>
-              <p class="text-2xl font-bold text-navy-800">{advisors.length}</p>
-              <p class="text-sm text-cream-600">Advisors</p>
-            </div>
+            <ChevronRight class="w-4 h-4 text-cream-400 group-hover:text-blue-500 group-hover:translate-x-0.5 transition-all" />
           </div>
-        </Card>
+          <p class="text-3xl font-bold text-navy-900">{advisors.length}</p>
+          <p class="text-sm text-navy-500 mt-1">Advisors</p>
+        </div>
       </a>
 
       <a href="/deadlines" class="group">
-        <Card variant="hover" class="h-full">
-          <div class="flex items-center gap-3">
-            <div class="p-2.5 bg-orange-100 rounded-xl group-hover:bg-orange-200 transition-colors">
+        <div class="h-full bg-white rounded-2xl border border-cream-200 p-5 transition-all duration-300 hover:shadow-elevated hover:-translate-y-1 hover:border-orange-200">
+          <div class="flex items-center justify-between mb-4">
+            <div class="p-3 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl group-hover:from-orange-100 group-hover:to-orange-200 transition-colors">
               <Calendar class="w-5 h-5 text-orange-600" />
             </div>
-            <div>
-              <p class="text-2xl font-bold text-navy-800">{deadlines.length}</p>
-              <p class="text-sm text-cream-600">Deadlines</p>
-            </div>
+            <ChevronRight class="w-4 h-4 text-cream-400 group-hover:text-orange-500 group-hover:translate-x-0.5 transition-all" />
           </div>
-        </Card>
+          <p class="text-3xl font-bold text-navy-900">{deadlines.length}</p>
+          <p class="text-sm text-navy-500 mt-1">Deadlines</p>
+        </div>
       </a>
 
       <a href="/documents" class="group">
-        <Card variant="hover" class="h-full">
-          <div class="flex items-center gap-3">
-            <div class="p-2.5 bg-emerald-100 rounded-xl group-hover:bg-emerald-200 transition-colors">
+        <div class="h-full bg-white rounded-2xl border border-cream-200 p-5 transition-all duration-300 hover:shadow-elevated hover:-translate-y-1 hover:border-emerald-200">
+          <div class="flex items-center justify-between mb-4">
+            <div class="p-3 bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-xl group-hover:from-emerald-100 group-hover:to-emerald-200 transition-colors">
               <FileText class="w-5 h-5 text-emerald-600" />
             </div>
-            <div>
-              <p class="text-2xl font-bold text-navy-800">{documentCount}</p>
-              <p class="text-sm text-cream-600">Documents</p>
-            </div>
+            <ChevronRight class="w-4 h-4 text-cream-400 group-hover:text-emerald-500 group-hover:translate-x-0.5 transition-all" />
           </div>
-        </Card>
+          <p class="text-3xl font-bold text-navy-900">{documentCount}</p>
+          <p class="text-sm text-navy-500 mt-1">Documents</p>
+        </div>
       </a>
 
       <a href="/meetings" class="group">
-        <Card variant="hover" class="h-full">
-          <div class="flex items-center gap-3">
-            <div class="p-2.5 bg-purple-100 rounded-xl group-hover:bg-purple-200 transition-colors">
+        <div class="h-full bg-white rounded-2xl border border-cream-200 p-5 transition-all duration-300 hover:shadow-elevated hover:-translate-y-1 hover:border-purple-200">
+          <div class="flex items-center justify-between mb-4">
+            <div class="p-3 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl group-hover:from-purple-100 group-hover:to-purple-200 transition-colors">
               <MessageSquare class="w-5 h-5 text-purple-600" />
             </div>
-            <div>
-              <p class="text-2xl font-bold text-navy-800">{meetingCount}</p>
-              <p class="text-sm text-cream-600">Meetings</p>
-            </div>
+            <ChevronRight class="w-4 h-4 text-cream-400 group-hover:text-purple-500 group-hover:translate-x-0.5 transition-all" />
           </div>
-        </Card>
+          <p class="text-3xl font-bold text-navy-900">{meetingCount}</p>
+          <p class="text-sm text-navy-500 mt-1">Meetings</p>
+        </div>
       </a>
     </div>
 
-    <!-- Charts Row -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+    <!-- Charts Row - Premium Design -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
       <!-- Net Worth Trend -->
       <div class="lg:col-span-2">
-        <Card>
-          <div class="flex items-center justify-between mb-4">
+        <div class="bg-white rounded-2xl border border-cream-200 p-6">
+          <div class="flex items-center justify-between mb-6">
             <div>
-              <h3 class="font-semibold text-navy-800">Net Worth Trend</h3>
-              <p class="text-sm text-cream-600">Last 12 months</p>
+              <h3 class="font-semibold text-navy-900 text-lg">Net Worth Trend</h3>
+              <p class="text-sm text-navy-500 mt-0.5">Last 12 months performance</p>
             </div>
             <Button href="/wealth" variant="ghost" size="sm">
               View Details
@@ -376,49 +392,55 @@
           {#if netWorthHistory.length > 0}
             <NetWorthChart data={netWorthHistory} height={280} />
           {:else}
-            <div class="h-[280px] flex items-center justify-center bg-cream-50 rounded-xl">
+            <div class="h-[280px] flex items-center justify-center bg-gradient-to-br from-cream-50 to-cream-100 rounded-2xl border border-cream-200">
               <div class="text-center">
-                <BarChart3 class="w-12 h-12 text-cream-400 mx-auto mb-2" />
-                <p class="text-cream-600">Add assets to see trends</p>
+                <div class="w-16 h-16 bg-cream-200 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <BarChart3 class="w-8 h-8 text-cream-500" />
+                </div>
+                <p class="text-navy-600 font-medium">No data yet</p>
+                <p class="text-sm text-navy-400 mt-1">Add assets to see trends</p>
               </div>
             </div>
           {/if}
-        </Card>
+        </div>
       </div>
 
       <!-- Asset Allocation -->
       <div>
-        <Card class="h-full">
-          <div class="flex items-center justify-between mb-4">
+        <div class="bg-white rounded-2xl border border-cream-200 p-6 h-full">
+          <div class="flex items-center justify-between mb-6">
             <div>
-              <h3 class="font-semibold text-navy-800">Asset Allocation</h3>
-              <p class="text-sm text-cream-600">By category</p>
+              <h3 class="font-semibold text-navy-900 text-lg">Allocation</h3>
+              <p class="text-sm text-navy-500 mt-0.5">By asset category</p>
             </div>
           </div>
           {#if assetAllocation.length > 0}
             <AssetAllocationChart data={assetAllocation} height={180} />
-            <div class="mt-4 space-y-2">
+            <div class="mt-6 space-y-3">
               {#each assetAllocation.slice(0, 4) as item}
-                <div class="flex items-center justify-between text-sm">
-                  <div class="flex items-center gap-2">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-3">
                     <div class="w-3 h-3 rounded-full" style="background-color: {item.color}"></div>
-                    <span class="text-cream-700">{item.category}</span>
+                    <span class="text-sm text-navy-700">{item.category}</span>
                   </div>
-                  <span class="font-medium text-navy-800">
+                  <span class="text-sm font-semibold text-navy-900">
                     {formatCurrency(item.value, { compact: true })}
                   </span>
                 </div>
               {/each}
             </div>
           {:else}
-            <div class="h-[180px] flex items-center justify-center bg-cream-50 rounded-xl">
+            <div class="h-[180px] flex items-center justify-center bg-gradient-to-br from-cream-50 to-cream-100 rounded-2xl border border-cream-200">
               <div class="text-center">
-                <PiggyBank class="w-12 h-12 text-cream-400 mx-auto mb-2" />
-                <p class="text-cream-600">Add assets to see allocation</p>
+                <div class="w-14 h-14 bg-cream-200 rounded-xl flex items-center justify-center mx-auto mb-3">
+                  <PiggyBank class="w-7 h-7 text-cream-500" />
+                </div>
+                <p class="text-navy-600 font-medium">No assets</p>
+                <p class="text-sm text-navy-400 mt-1">Add assets to see allocation</p>
               </div>
             </div>
           {/if}
-        </Card>
+        </div>
       </div>
     </div>
 
@@ -571,28 +593,34 @@
           {/if}
         </Card>
 
-        <!-- Quick Actions -->
-        <Card class="bg-gradient-to-br from-navy-800 to-navy-900 text-white border-0">
-          <h3 class="font-semibold mb-4">Quick Actions</h3>
-          <div class="grid grid-cols-2 gap-2">
-            <Button href="/advisors?new=true" variant="ghost" size="sm" class="text-white hover:bg-white/10 justify-start">
-              <Users class="w-4 h-4" />
-              Add Advisor
-            </Button>
-            <Button href="/deadlines?new=true" variant="ghost" size="sm" class="text-white hover:bg-white/10 justify-start">
-              <Calendar class="w-4 h-4" />
-              Add Deadline
-            </Button>
-            <Button href="/documents?upload=true" variant="ghost" size="sm" class="text-white hover:bg-white/10 justify-start">
-              <FileText class="w-4 h-4" />
-              Upload Doc
-            </Button>
-            <Button href="/meetings?new=true" variant="ghost" size="sm" class="text-white hover:bg-white/10 justify-start">
-              <MessageSquare class="w-4 h-4" />
-              Log Meeting
-            </Button>
+        <!-- Quick Actions - Premium Design -->
+        <div class="bg-gradient-to-br from-navy-900 via-navy-950 to-navy-950 rounded-2xl p-6 relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-accent-500/10 rounded-full blur-2xl"></div>
+          <div class="relative">
+            <div class="flex items-center gap-2 mb-5">
+              <Zap class="w-5 h-5 text-accent-400" />
+              <h3 class="font-semibold text-white">Quick Actions</h3>
+            </div>
+            <div class="space-y-2">
+              <a href="/advisors?new=true" class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/80 hover:text-white hover:bg-white/10 transition-colors">
+                <Users class="w-4 h-4 text-accent-400" />
+                <span class="text-sm font-medium">Add Advisor</span>
+              </a>
+              <a href="/deadlines?new=true" class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/80 hover:text-white hover:bg-white/10 transition-colors">
+                <Calendar class="w-4 h-4 text-accent-400" />
+                <span class="text-sm font-medium">Add Deadline</span>
+              </a>
+              <a href="/documents?upload=true" class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/80 hover:text-white hover:bg-white/10 transition-colors">
+                <FileText class="w-4 h-4 text-accent-400" />
+                <span class="text-sm font-medium">Upload Document</span>
+              </a>
+              <a href="/meetings?new=true" class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/80 hover:text-white hover:bg-white/10 transition-colors">
+                <MessageSquare class="w-4 h-4 text-accent-400" />
+                <span class="text-sm font-medium">Log Meeting</span>
+              </a>
+            </div>
           </div>
-        </Card>
+        </div>
       </div>
     </div>
   {/if}
