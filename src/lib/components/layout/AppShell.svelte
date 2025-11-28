@@ -1,0 +1,38 @@
+<script lang="ts">
+  import type { Snippet } from 'svelte';
+  import { uiStore } from '$lib/stores/ui';
+  import Sidebar from './Sidebar.svelte';
+  import Header from './Header.svelte';
+  import { Toast } from '$lib/components/ui';
+
+  interface Props {
+    title?: string;
+    children: Snippet;
+  }
+
+  let { title, children }: Props = $props();
+
+  const sidebarOpen = $derived($uiStore.sidebarOpen);
+</script>
+
+<div class="min-h-screen bg-cream-200">
+  <Sidebar />
+
+  <div class="transition-all duration-300 lg:{sidebarOpen ? 'ml-64' : 'ml-20'}">
+    <Header {title} />
+
+    <main class="p-4 lg:p-6">
+      {@render children()}
+    </main>
+  </div>
+
+  <Toast />
+</div>
+
+<style>
+  @media (min-width: 1024px) {
+    div:has(> main) {
+      margin-left: var(--sidebar-width, 16rem);
+    }
+  }
+</style>
