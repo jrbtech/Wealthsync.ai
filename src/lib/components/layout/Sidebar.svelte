@@ -11,8 +11,7 @@
     Sparkles,
     Settings,
     ChevronLeft,
-    X,
-    Zap
+    X
   } from 'lucide-svelte';
 
   const navigation = [
@@ -60,18 +59,15 @@
   <div class="flex items-center justify-between h-18 px-5 border-b border-white/5">
     {#if sidebarOpen}
       <a href="/dashboard" class="flex items-center gap-3 group">
-        <div class="w-10 h-10 bg-gradient-to-br from-accent-400 to-accent-600 rounded-xl flex items-center justify-center shadow-lg shadow-accent-500/20 group-hover:shadow-accent-500/30 transition-shadow">
-          <span class="text-navy-950 font-bold text-xl">W</span>
+        <div class="w-9 h-9 bg-white rounded-lg flex items-center justify-center">
+          <span class="text-navy-900 font-bold text-lg">W</span>
         </div>
-        <div class="flex flex-col">
-          <span class="font-semibold text-white text-lg tracking-tight">WealthSync</span>
-          <span class="text-[10px] text-accent-400 font-medium uppercase tracking-widest">Family Office</span>
-        </div>
+        <span class="font-semibold text-white text-lg tracking-tight">WealthSync.ai</span>
       </a>
     {:else}
       <a href="/dashboard" class="mx-auto group">
-        <div class="w-10 h-10 bg-gradient-to-br from-accent-400 to-accent-600 rounded-xl flex items-center justify-center shadow-lg shadow-accent-500/20 group-hover:shadow-accent-500/30 transition-shadow">
-          <span class="text-navy-950 font-bold text-xl">W</span>
+        <div class="w-9 h-9 bg-white rounded-lg flex items-center justify-center">
+          <span class="text-navy-900 font-bold text-lg">W</span>
         </div>
       </a>
     {/if}
@@ -114,10 +110,7 @@
     <!-- AI Section -->
     <div class="mt-8 pt-6 border-t border-white/5">
       {#if sidebarOpen}
-        <div class="px-4 mb-3 flex items-center gap-2">
-          <Zap class="w-3.5 h-3.5 text-accent-400" />
-          <span class="text-xs font-semibold text-navy-400 uppercase tracking-wider">AI Tools</span>
-        </div>
+        <p class="px-4 mb-3 text-xs font-semibold text-navy-500 uppercase tracking-wider">AI Tools</p>
       {/if}
       <ul class="space-y-1.5">
         {#each aiNavigation as item}
@@ -127,16 +120,13 @@
               href={item.href}
               class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200
                 {isActive(item.href)
-                  ? 'bg-gradient-to-r from-accent-500/20 to-accent-600/10 text-accent-300 border border-accent-500/30'
+                  ? 'bg-white/10 text-white'
                   : 'text-navy-300 hover:bg-white/5 hover:text-white'}"
               onclick={() => uiStore.closeMobileMenu()}
             >
               <Icon class="w-5 h-5 flex-shrink-0 {isActive(item.href) ? 'text-accent-400' : ''}" />
               {#if sidebarOpen}
                 <span class="font-medium">{item.name}</span>
-                {#if !isActive(item.href)}
-                  <span class="ml-auto px-2 py-0.5 text-[10px] font-semibold bg-accent-500 text-navy-950 rounded-full">NEW</span>
-                {/if}
               {/if}
             </a>
           </li>

@@ -77,7 +77,7 @@
       {#if title || closeable}
         <div class="flex items-center justify-between px-6 py-4 border-b border-cream-300">
           {#if title}
-            <h2 id="modal-title" class="text-lg font-semibold text-navy-800 font-serif">{title}</h2>
+            <h2 id="modal-title" class="text-lg font-semibold text-navy-800 font-display">{title}</h2>
           {:else}
             <div></div>
           {/if}

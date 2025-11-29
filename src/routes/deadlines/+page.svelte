@@ -296,7 +296,7 @@
 </script>
 
 <svelte:head>
-  <title>Deadlines - WealthSync</title>
+  <title>Deadlines - WealthSync.ai</title>
 </svelte:head>
 
 <AppShell title="Deadlines">
@@ -357,7 +357,7 @@
       <Card>
         <!-- Calendar Header -->
         <div class="flex items-center justify-between mb-6">
-          <h2 class="text-xl font-serif font-semibold text-navy-800">
+          <h2 class="text-xl font-display font-semibold text-navy-800">
             {format(currentMonth, 'MMMM yyyy')}
           </h2>
           <div class="flex items-center gap-2">

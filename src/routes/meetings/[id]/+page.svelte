@@ -187,7 +187,7 @@
 </script>
 
 <svelte:head>
-  <title>{meeting?.title || 'Meeting'} - WealthSync</title>
+  <title>{meeting?.title || 'Meeting'} - WealthSync.ai</title>
 </svelte:head>
 
 <AppShell>
@@ -212,10 +212,10 @@
               <Input
                 bind:value={formData.title}
                 placeholder="Meeting title"
-                class="text-xl font-serif font-semibold"
+                class="text-xl font-display font-semibold"
               />
             {:else}
-              <h1 class="text-2xl font-serif font-semibold text-navy-800">
+              <h1 class="text-2xl font-display font-semibold text-navy-800">
                 {meeting.title}
               </h1>
             {/if}

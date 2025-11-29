@@ -75,14 +75,14 @@
 </script>
 
 <svelte:head>
-  <title>WealthSync - Family Office Operating System</title>
+  <title>WealthSync.ai - Family Office Operating System</title>
 </svelte:head>
 
 {#if !initialized && !isPublicRoute}
   <div class="min-h-screen bg-cream-200 flex items-center justify-center">
     <div class="text-center">
       <div class="w-12 h-12 bg-navy-800 rounded-lg flex items-center justify-center mx-auto mb-4">
-        <span class="text-gold-400 font-serif font-bold text-2xl">W</span>
+        <span class="text-white font-bold text-2xl">W</span>
       </div>
       <Spinner size="lg" />
     </div>

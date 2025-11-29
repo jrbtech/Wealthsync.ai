@@ -111,7 +111,7 @@
 </script>
 
 <svelte:head>
-  <title>AI Assistant - WealthSync</title>
+  <title>AI Assistant - WealthSync.ai</title>
 </svelte:head>
 
 <AppShell title="AI Assistant">
@@ -122,7 +122,7 @@
         <Sparkles class="w-6 h-6 text-gold-600" />
       </div>
       <div>
-        <h1 class="text-xl font-serif font-semibold text-navy-800">AI-Powered Tools</h1>
+        <h1 class="text-xl font-display font-semibold text-navy-800">AI-Powered Tools</h1>
         <p class="text-sm text-cream-600">Summarize documents, clean up meeting notes, and generate reports</p>
       </div>
     </div>

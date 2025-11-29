@@ -224,7 +224,7 @@
 </script>
 
 <svelte:head>
-  <title>Meetings - WealthSync</title>
+  <title>Meetings - WealthSync.ai</title>
 </svelte:head>
 
 <AppShell title="Meeting Notes">

@@ -144,7 +144,7 @@
 </script>
 
 <svelte:head>
-  <title>{advisor?.name || 'Advisor'} - WealthSync</title>
+  <title>{advisor?.name || 'Advisor'} - WealthSync.ai</title>
 </svelte:head>
 
 <AppShell>
@@ -164,7 +164,7 @@
         <div class="flex items-start gap-4">
           <Avatar name={advisor.name} size="xl" />
           <div>
-            <h1 class="text-2xl font-serif font-semibold text-navy-800">{advisor.name}</h1>
+            <h1 class="text-2xl font-display font-semibold text-navy-800">{advisor.name}</h1>
             <p class="text-cream-600">{advisor.firm}</p>
             <Badge variant={specialtyColors[advisor.specialty] as any} class="mt-2">
               {ADVISOR_SPECIALTY_LABELS[advisor.specialty]}

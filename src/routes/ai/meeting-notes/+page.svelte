@@ -211,7 +211,7 @@
 </script>
 
 <svelte:head>
-  <title>Meeting Notes Cleanup - WealthSync</title>
+  <title>Meeting Notes Cleanup - WealthSync.ai</title>
 </svelte:head>
 
 <AppShell title="Meeting Notes Cleanup">
@@ -222,7 +222,7 @@
         <Sparkles class="w-6 h-6 text-gold-600" />
       </div>
       <div>
-        <h1 class="text-xl font-serif font-semibold text-navy-800">Clean Up Meeting Notes</h1>
+        <h1 class="text-xl font-display font-semibold text-navy-800">Clean Up Meeting Notes</h1>
         <p class="text-sm text-cream-600">Transform rough notes into organized, actionable meeting records</p>
       </div>
     </div>

@@ -232,7 +232,7 @@
 </script>
 
 <svelte:head>
-  <title>Advisors - WealthSync</title>
+  <title>Advisors - WealthSync.ai</title>
 </svelte:head>
 
 <AppShell title="Advisors">

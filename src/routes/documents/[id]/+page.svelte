@@ -161,7 +161,7 @@
 </script>
 
 <svelte:head>
-  <title>{document?.filename || 'Document'} - WealthSync</title>
+  <title>{document?.filename || 'Document'} - WealthSync.ai</title>
 </svelte:head>
 
 <AppShell>

@@ -102,7 +102,7 @@
 </script>
 
 <svelte:head>
-  <title>Accept Invite - WealthSync</title>
+  <title>Accept Invite - WealthSync.ai</title>
 </svelte:head>
 
 <div class="min-h-screen bg-cream-200 flex items-center justify-center px-4 py-12">
@@ -111,9 +111,9 @@
     <div class="text-center mb-8">
       <a href="/" class="inline-flex items-center gap-2">
         <div class="w-10 h-10 bg-navy-800 rounded-lg flex items-center justify-center">
-          <span class="text-gold-400 font-serif font-bold text-xl">W</span>
+          <span class="text-white font-bold text-xl">W</span>
         </div>
-        <span class="font-serif font-semibold text-navy-800 text-2xl">WealthSync</span>
+        <span class="font-display font-semibold text-navy-800 text-2xl">WealthSync.ai</span>
       </a>
     </div>
 
@@ -124,7 +124,7 @@
         </div>
       {:else if inviteError}
         <div class="text-center py-4">
-          <h1 class="text-2xl font-serif font-semibold text-navy-800 mb-2">
+          <h1 class="text-2xl font-display font-semibold text-navy-800 mb-2">
             Invalid Invite
           </h1>
           <p class="text-cream-600 mb-6">{inviteError}</p>
@@ -133,7 +133,7 @@
           </Button>
         </div>
       {:else if invite}
-        <h1 class="text-2xl font-serif font-semibold text-navy-800 text-center mb-2">
+        <h1 class="text-2xl font-display font-semibold text-navy-800 text-center mb-2">
           You're Invited
         </h1>
         <p class="text-cream-600 text-center mb-6">

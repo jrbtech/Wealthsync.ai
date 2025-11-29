@@ -97,7 +97,7 @@
 </script>
 
 <svelte:head>
-  <title>Settings - WealthSync</title>
+  <title>Settings - WealthSync.ai</title>
 </svelte:head>
 
 <AppShell title="Settings">

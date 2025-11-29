@@ -151,7 +151,7 @@
 </script>
 
 <svelte:head>
-  <title>Team - WealthSync</title>
+  <title>Team - WealthSync.ai</title>
 </svelte:head>
 
 <AppShell title="Team Members">
@@ -171,7 +171,7 @@
       <!-- Header -->
       <div class="flex items-center justify-between mb-6">
         <div>
-          <h2 class="text-xl font-serif font-semibold text-navy-800">Family Members</h2>
+          <h2 class="text-xl font-display font-semibold text-navy-800">Family Members</h2>
           <p class="text-sm text-cream-600">
             {members.length} of {memberLimit === Infinity ? 'unlimited' : memberLimit} members
           </p>

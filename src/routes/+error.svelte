@@ -32,7 +32,7 @@
 </script>
 
 <svelte:head>
-  <title>{errorInfo.title} | WealthSync</title>
+  <title>{errorInfo.title} | WealthSync.ai</title>
 </svelte:head>
 
 <div class="min-h-screen bg-cream-200 flex items-center justify-center p-4">
@@ -41,7 +41,7 @@
       <AlertTriangle class="w-10 h-10 text-red-600" />
     </div>
 
-    <h1 class="text-6xl font-bold text-navy-800 font-serif mb-2">{statusCode}</h1>
+    <h1 class="text-6xl font-bold text-navy-800 font-display mb-2">{statusCode}</h1>
     <h2 class="text-xl font-semibold text-navy-700 mb-3">{errorInfo.title}</h2>
     <p class="text-cream-600 mb-8">{errorInfo.description}</p>
 

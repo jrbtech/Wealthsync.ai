@@ -109,7 +109,7 @@
 </script>
 
 <svelte:head>
-  <title>Billing - WealthSync</title>
+  <title>Billing - WealthSync.ai</title>
 </svelte:head>
 
 <AppShell title="Billing & Plan">
@@ -126,7 +126,7 @@
       <div>
         <p class="text-sm text-cream-600">Current Plan</p>
         <div class="flex items-center gap-2 mt-1">
-          <h2 class="text-2xl font-serif font-semibold text-navy-800 capitalize">
+          <h2 class="text-2xl font-display font-semibold text-navy-800 capitalize">
             {family?.plan || 'Foundation'}
           </h2>
           <Badge variant="gold">Active</Badge>
@@ -175,7 +175,7 @@
   </Card>
 
   <!-- Plan Comparison -->
-  <h2 class="text-xl font-serif font-semibold text-navy-800 mb-4">Available Plans</h2>
+  <h2 class="text-xl font-display font-semibold text-navy-800 mb-4">Available Plans</h2>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
     {#each plans as plan}
@@ -193,7 +193,7 @@
         {/if}
 
         <div class="p-6">
-          <h3 class="text-xl font-serif font-semibold text-navy-800">{plan.name}</h3>
+          <h3 class="text-xl font-display font-semibold text-navy-800">{plan.name}</h3>
           <div class="mt-2">
             <span class="text-3xl font-bold text-navy-800">{formatCurrency(price)}</span>
             <span class="text-cream-600">/month</span>

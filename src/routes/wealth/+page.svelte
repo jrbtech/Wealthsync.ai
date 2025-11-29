@@ -448,7 +448,7 @@
 </script>
 
 <svelte:head>
-  <title>Wealth Tracker - WealthSync</title>
+  <title>Wealth Tracker - WealthSync.ai</title>
 </svelte:head>
 
 <AppShell title="Wealth Tracker">
@@ -532,7 +532,7 @@
 
     <!-- Entities -->
     <div class="flex items-center justify-between mb-4">
-      <h2 class="text-xl font-serif font-semibold text-navy-800">Entities</h2>
+      <h2 class="text-xl font-display font-semibold text-navy-800">Entities</h2>
       <div class="flex items-center gap-2">
         {#if entities.length > 0}
           <div class="flex items-center border border-cream-300 rounded-lg overflow-hidden">

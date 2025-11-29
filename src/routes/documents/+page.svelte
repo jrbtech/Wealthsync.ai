@@ -227,7 +227,7 @@
 </script>
 
 <svelte:head>
-  <title>Documents - WealthSync</title>
+  <title>Documents - WealthSync.ai</title>
 </svelte:head>
 
 <AppShell title="Document Vault">

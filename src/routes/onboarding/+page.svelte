@@ -187,7 +187,7 @@
         userId: user.id
       });
 
-      success('Welcome to WealthSync! Your family office is ready.');
+      success('Welcome to WealthSync.ai! Your family office is ready.');
       goto('/dashboard');
     } catch (err) {
       console.error('Onboarding error:', err);
@@ -199,7 +199,7 @@
 </script>
 
 <svelte:head>
-  <title>Welcome to WealthSync</title>
+  <title>Welcome to WealthSync.ai</title>
 </svelte:head>
 
 <div class="min-h-screen bg-gradient-to-br from-cream-100 via-cream-50 to-white flex flex-col">
@@ -208,9 +208,9 @@
     <div class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
       <a href="/" class="flex items-center gap-2">
         <div class="w-8 h-8 bg-navy-800 rounded-lg flex items-center justify-center">
-          <span class="text-gold-500 font-serif font-bold text-lg">W</span>
+          <span class="text-white font-bold text-lg">W</span>
         </div>
-        <span class="font-serif font-semibold text-navy-800 text-lg">WealthSync</span>
+        <span class="font-display font-semibold text-navy-800 text-lg">WealthSync.ai</span>
       </a>
 
       <button
@@ -266,8 +266,8 @@
           <div class="w-20 h-20 bg-navy-800 rounded-2xl flex items-center justify-center mx-auto mb-6">
             <Sparkles class="w-10 h-10 text-gold-500" />
           </div>
-          <h1 class="text-3xl font-serif font-bold text-navy-800 mb-3">
-            Welcome to WealthSync
+          <h1 class="text-3xl font-display font-bold text-navy-800 mb-3">
+            Welcome to WealthSync.ai
           </h1>
           <p class="text-lg text-cream-600 max-w-md mx-auto">
             Let's set up your family office in just a few minutes. We'll help you organize your advisors, track your wealth, and stay on top of important deadlines.
@@ -289,7 +289,7 @@
           <div class="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-4">
             <Users class="w-8 h-8 text-blue-600" />
           </div>
-          <h2 class="text-2xl font-serif font-bold text-navy-800 mb-2">
+          <h2 class="text-2xl font-display font-bold text-navy-800 mb-2">
             Add Your Advisors
           </h2>
           <p class="text-cream-600">
@@ -347,7 +347,7 @@
           <div class="w-16 h-16 bg-emerald-100 rounded-xl flex items-center justify-center mx-auto mb-4">
             <Building class="w-8 h-8 text-emerald-600" />
           </div>
-          <h2 class="text-2xl font-serif font-bold text-navy-800 mb-2">
+          <h2 class="text-2xl font-display font-bold text-navy-800 mb-2">
             Wealth Entities
           </h2>
           <p class="text-cream-600">
@@ -394,7 +394,7 @@
           <div class="w-16 h-16 bg-orange-100 rounded-xl flex items-center justify-center mx-auto mb-4">
             <Calendar class="w-8 h-8 text-orange-600" />
           </div>
-          <h2 class="text-2xl font-serif font-bold text-navy-800 mb-2">
+          <h2 class="text-2xl font-display font-bold text-navy-800 mb-2">
             Important Deadlines
           </h2>
           <p class="text-cream-600">
@@ -446,7 +446,7 @@
           <div class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <CheckCircle class="w-10 h-10 text-emerald-600" />
           </div>
-          <h2 class="text-3xl font-serif font-bold text-navy-800 mb-3">
+          <h2 class="text-3xl font-display font-bold text-navy-800 mb-3">
             You're All Set!
           </h2>
           <p class="text-lg text-cream-600 max-w-md mx-auto mb-8">
