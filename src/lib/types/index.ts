@@ -505,3 +505,319 @@ export interface AgencyActivity {
   metadata?: Record<string, unknown>;
   createdAt: Date;
 }
+
+// ============================================
+// WealthSync.ai - Wealth Advisor Reports
+// "AI Client Reports for Wealth Advisors" - $997/month
+// ============================================
+
+// Advisor Firm Branding (white-label reports)
+export interface AdvisorBranding {
+  logoUrl?: string;
+  primaryColor: string;
+  secondaryColor: string;
+  accentColor: string;
+  fontFamily: string;
+  firmName: string;
+  firmWebsite?: string;
+  contactEmail?: string;
+  contactPhone?: string;
+  address?: string;
+  footerText?: string;
+  disclaimerText?: string;
+}
+
+export const DEFAULT_ADVISOR_BRANDING: AdvisorBranding = {
+  primaryColor: '#0f172a',
+  secondaryColor: '#1e40af',
+  accentColor: '#10b981',
+  fontFamily: 'Georgia, serif',
+  firmName: 'Your Wealth Advisory',
+  footerText: 'Confidential - Prepared exclusively for client use',
+  disclaimerText: 'This report is for informational purposes only and does not constitute financial, legal, or tax advice.'
+};
+
+// Wealth Advisor Firm (the paying customer)
+export type WealthAdvisorPlanType = 'professional';
+
+export interface WealthAdvisorFirm {
+  id: string;
+  firmName: string;
+  primaryUserId: string;
+  plan: WealthAdvisorPlanType;
+  branding: AdvisorBranding;
+  stripeCustomerId?: string;
+  stripeSubscriptionId?: string;
+  onboardingCompleted?: boolean;
+  createdAt: Date;
+}
+
+export const WEALTH_ADVISOR_PLAN_PRICES: Record<WealthAdvisorPlanType, number> = {
+  professional: 997
+};
+
+export const WEALTH_ADVISOR_PLAN_FEATURES: Record<WealthAdvisorPlanType, { clients: number; reportsPerMonth: number; teamMembers: number }> = {
+  professional: { clients: Infinity, reportsPerMonth: Infinity, teamMembers: Infinity }
+};
+
+// Client Profile (the advisor's client - HNW individual/family)
+export type ClientStatus = 'active' | 'prospect' | 'inactive' | 'archived';
+
+export interface ClientAdvisor {
+  id: string;
+  name: string;
+  firm: string;
+  role: AdvisorSpecialty;
+  email?: string;
+  phone?: string;
+  isPrimary?: boolean;
+}
+
+export interface ClientEntity {
+  id: string;
+  name: string;
+  type: EntityType;
+  purpose?: string;
+  stateOfFormation?: string;
+  dateFormed?: Date;
+}
+
+export interface ClientAsset {
+  id: string;
+  name: string;
+  category: AssetCategory;
+  value: number;
+  entityId?: string; // Which entity holds this asset
+  custodian?: string;
+  accountNumber?: string;
+  notes?: string;
+  lastUpdated: Date;
+}
+
+export interface ClientLiability {
+  id: string;
+  name: string;
+  category: LiabilityCategory;
+  balance: number;
+  entityId?: string;
+  lender?: string;
+  interestRate?: number;
+  maturityDate?: Date;
+  notes?: string;
+  lastUpdated: Date;
+}
+
+export interface ClientProfile {
+  id: string;
+  firmId: string;
+
+  // Basic Info
+  clientName: string;
+  clientType: 'individual' | 'family' | 'trust';
+  status: ClientStatus;
+
+  // Contact
+  email?: string;
+  phone?: string;
+  address?: string;
+
+  // Demographics
+  dateOfBirth?: Date;
+  spouseName?: string;
+  spouseDateOfBirth?: Date;
+  dependents?: Array<{ name: string; relationship: string; dateOfBirth?: Date }>;
+
+  // Financial Summary
+  estimatedNetWorth: number;
+  annualIncome?: number;
+  riskTolerance?: 'conservative' | 'moderate' | 'aggressive';
+  investmentHorizon?: 'short' | 'medium' | 'long';
+
+  // Wealth Structure
+  entities: ClientEntity[];
+  assets: ClientAsset[];
+  liabilities: ClientLiability[];
+
+  // Advisory Team
+  advisors: ClientAdvisor[];
+
+  // Key Dates & Deadlines
+  importantDates?: Array<{
+    id: string;
+    title: string;
+    date: Date;
+    category: DeadlineCategory;
+    recurrence: RecurrenceType;
+    notes?: string;
+  }>;
+
+  // Notes
+  notes?: string;
+  goals?: string[];
+  concerns?: string[];
+
+  // Metadata
+  createdAt: Date;
+  createdBy: string;
+  lastUpdated: Date;
+}
+
+export const CLIENT_STATUS_LABELS: Record<ClientStatus, string> = {
+  active: 'Active Client',
+  prospect: 'Prospect',
+  inactive: 'Inactive',
+  archived: 'Archived'
+};
+
+// Wealth Report Types
+export type WealthReportType =
+  | 'wealth_audit'           // Comprehensive net worth analysis
+  | 'advisor_coordination'   // Who does what - team action plan
+  | 'compliance_calendar'    // 12-month deadline tracker
+  | 'estate_summary'         // Estate planning overview
+  | 'quarterly_review';      // Quarterly wealth review
+
+export type WealthReportStatus = 'draft' | 'generating' | 'ready' | 'delivered' | 'archived';
+
+// Risk Assessment
+export interface WealthRisk {
+  id: string;
+  severity: 'critical' | 'warning' | 'info';
+  category: 'tax' | 'legal' | 'insurance' | 'liquidity' | 'concentration' | 'succession' | 'compliance';
+  title: string;
+  description: string;
+  financialImpact?: string;
+  recommendation: string;
+  deadline?: Date;
+  assignedAdvisor?: string;
+}
+
+export const WEALTH_RISK_CATEGORY_LABELS: Record<WealthRisk['category'], string> = {
+  tax: 'Tax Risk',
+  legal: 'Legal Risk',
+  insurance: 'Insurance Gap',
+  liquidity: 'Liquidity Risk',
+  concentration: 'Concentration Risk',
+  succession: 'Succession Planning',
+  compliance: 'Compliance Risk'
+};
+
+// Action Item for Advisor Coordination
+export interface AdvisorAction {
+  id: string;
+  priority: 'urgent' | 'high' | 'medium' | 'low';
+  advisorRole: AdvisorSpecialty;
+  advisorName?: string;
+  action: string;
+  context: string;
+  deadline?: Date;
+  dependencies?: string[];
+  estimatedCost?: string;
+  status: 'pending' | 'in_progress' | 'completed';
+}
+
+// Compliance Calendar Item
+export interface ComplianceDeadline {
+  id: string;
+  month: number; // 1-12
+  title: string;
+  category: DeadlineCategory;
+  description: string;
+  responsibleParty: string;
+  estimatedFee?: number;
+  penalty?: string;
+  recurrence: RecurrenceType;
+  status: 'upcoming' | 'due_soon' | 'completed' | 'overdue';
+}
+
+// Wealth Report (the main deliverable)
+export interface WealthReport {
+  id: string;
+  firmId: string;
+  clientId: string;
+  type: WealthReportType;
+  title: string;
+  status: WealthReportStatus;
+
+  // Report Period
+  reportDate: Date;
+  periodStart?: Date;
+  periodEnd?: Date;
+
+  // AI-Generated Content
+  executiveSummary?: string;
+
+  // Net Worth Analysis
+  netWorthSummary?: {
+    totalAssets: number;
+    totalLiabilities: number;
+    netWorth: number;
+    liquidAssets: number;
+    illiquidAssets: number;
+    assetAllocation: Record<AssetCategory, number>;
+    entityBreakdown: Array<{ entityName: string; entityType: EntityType; netValue: number }>;
+    changeFromPrevious?: {
+      amount: number;
+      percentage: number;
+      period: string;
+    };
+  };
+
+  // Risk Assessment
+  risks?: WealthRisk[];
+
+  // Advisor Coordination Plan
+  advisorActions?: AdvisorAction[];
+
+  // Compliance Calendar
+  complianceCalendar?: ComplianceDeadline[];
+
+  // Strategic Recommendations
+  recommendations?: string[];
+
+  // PDF Output
+  pdfUrl?: string;
+  pdfGeneratedAt?: Date;
+
+  // Metadata
+  createdAt: Date;
+  createdBy: string;
+  deliveredAt?: Date;
+  viewCount: number;
+}
+
+export const WEALTH_REPORT_TYPE_LABELS: Record<WealthReportType, string> = {
+  wealth_audit: 'Wealth Audit Report',
+  advisor_coordination: 'Advisor Coordination Plan',
+  compliance_calendar: 'Compliance Calendar',
+  estate_summary: 'Estate Planning Summary',
+  quarterly_review: 'Quarterly Wealth Review'
+};
+
+export const WEALTH_REPORT_STATUS_LABELS: Record<WealthReportStatus, string> = {
+  draft: 'Draft',
+  generating: 'Generating...',
+  ready: 'Ready',
+  delivered: 'Delivered',
+  archived: 'Archived'
+};
+
+// Activity Types for Wealth Advisor
+export type WealthAdvisorActivityType =
+  | 'client_added'
+  | 'client_updated'
+  | 'report_generated'
+  | 'report_delivered'
+  | 'branding_updated'
+  | 'team_member_invited';
+
+export interface WealthAdvisorActivity {
+  id: string;
+  type: WealthAdvisorActivityType;
+  description: string;
+  userId: string;
+  clientId?: string;
+  reportId?: string;
+  metadata?: Record<string, unknown>;
+  createdAt: Date;
+}

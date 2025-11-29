@@ -1,63 +1,62 @@
 <script lang="ts">
   import { Button } from '$lib/components/ui';
   import { formatCurrency } from '$lib/utils/format';
-  import { PLAN_PRICES } from '$lib/types';
+  import { WEALTH_ADVISOR_PLAN_PRICES } from '$lib/types';
   import {
     Check,
     Users,
     Calendar,
     FileText,
     PieChart,
-    Sparkles,
     Shield,
     Clock,
     ArrowRight,
-    ChevronRight,
     Lock,
     Globe,
     TrendingUp,
     Building,
     BarChart3,
     Layers,
-    Zap,
-    Eye
+    Eye,
+    Download,
+    AlertTriangle
   } from 'lucide-svelte';
 
-  const features = [
+  const capabilities = [
     {
-      icon: Layers,
-      title: 'Consolidation',
-      description: 'Aggregate accounts, assets, and legal entities into a unified view. Liquid investments, real estate, private equity, and alternative holdings.',
+      icon: PieChart,
+      title: 'Wealth Analysis',
+      description: 'Comprehensive net worth assessment with asset allocation, entity structure, and portfolio composition. Institutional-grade analysis for discerning clients.',
       color: 'accent'
     },
     {
-      icon: Eye,
-      title: 'Visibility',
-      description: 'Real-time dashboards providing comprehensive insights. Performance tracking, asset allocation, and risk analysis across the entire portfolio.',
+      icon: AlertTriangle,
+      title: 'Risk Assessment',
+      description: 'Systematic identification of tax, legal, insurance, liquidity, and succession exposures. Each finding includes quantified impact and remediation guidance.',
       color: 'navy'
     },
     {
       icon: Users,
-      title: 'Coordination',
-      description: 'Align advisors, family members, and staff on a single platform. Structured communication for CPAs, estate attorneys, and wealth managers.',
+      title: 'Team Coordination',
+      description: 'Structured action plans delineating responsibilities across CPAs, estate counsel, wealth managers, and insurance advisors. Clear accountability and timelines.',
       color: 'emerald'
     },
     {
-      icon: Shield,
-      title: 'Protection',
-      description: 'Bank-level encryption, SOC 2 Type II compliance, and granular access controls. Data sovereignty and privacy by design.',
+      icon: Calendar,
+      title: 'Compliance Management',
+      description: 'Twelve-month regulatory calendar covering tax obligations, trust distributions, insurance renewals, and filing requirements. Systematic deadline oversight.',
       color: 'purple'
     },
     {
-      icon: Sparkles,
-      title: 'Automation',
-      description: 'Document processing, deadline management, and report generation. Streamlined workflows for operational efficiency.',
+      icon: Download,
+      title: 'White-Label Delivery',
+      description: 'Professionally formatted documents bearing your firm credentials and visual identity. Ready for immediate client presentation.',
       color: 'orange'
     },
     {
-      icon: BarChart3,
-      title: 'Reporting',
-      description: 'Institutional-quality reports for family meetings, tax planning, and advisor reviews. Customizable templates and scheduled delivery.',
+      icon: Clock,
+      title: 'Operational Efficiency',
+      description: 'Reduce report preparation from days to minutes. Reallocate professional resources from documentation to advisory activities.',
       color: 'blue'
     }
   ];
@@ -71,90 +70,92 @@
     blue: { bg: 'bg-blue-50', icon: 'text-blue-600' }
   };
 
-  const plans = [
+  const reportTypes = [
     {
-      id: 'foundation',
-      name: 'Foundation',
-      price: PLAN_PRICES.foundation,
-      description: 'Essential infrastructure for emerging family offices',
-      features: [
-        'Up to 3 family members',
-        '10 advisor connections',
-        '5GB secure document storage',
-        'Deadline tracking',
-        'Email support'
-      ]
+      title: 'Wealth Audit',
+      description: 'Complete net worth analysis with asset allocation, entity structure, risk assessment, and strategic recommendations for wealth preservation.',
+      pages: '6 pages'
     },
     {
-      id: 'growth',
-      name: 'Growth',
-      price: PLAN_PRICES.growth,
-      description: 'Comprehensive platform for active family offices',
-      popular: true,
-      features: [
-        'Up to 8 family members',
-        'Unlimited advisor connections',
-        '25GB secure document storage',
-        'Document processing',
-        'Priority support',
-        'Custom reporting'
-      ]
+      title: 'Advisory Coordination',
+      description: 'Detailed action items for each professional advisor with priorities, interdependencies, timeline, and estimated engagement costs.',
+      pages: '4 pages'
     },
     {
-      id: 'legacy',
-      name: 'Legacy',
-      price: PLAN_PRICES.legacy,
-      description: 'Enterprise solution for multi-generational offices',
-      features: [
-        'Unlimited family members',
-        'Unlimited advisor connections',
-        '100GB secure document storage',
-        'Full automation suite',
-        'Dedicated account manager',
-        'Custom integrations',
-        'API access'
-      ]
+      title: 'Compliance Calendar',
+      description: 'Twelve-month schedule of tax deadlines, trust distributions, insurance renewals, regulatory filings, and review obligations.',
+      pages: '3 pages'
+    },
+    {
+      title: 'Estate Analysis',
+      description: 'Gap assessment for testamentary documents, trust structures, powers of attorney, beneficiary designations, and succession planning.',
+      pages: '5 pages'
+    },
+    {
+      title: 'Quarterly Review',
+      description: 'Period-over-period analysis with net worth changes, portfolio performance, risk updates, and priorities for the upcoming quarter.',
+      pages: '6 pages'
     }
   ];
 
-  const stats = [
-    { value: '$10B+', label: 'Assets Under Management' },
-    { value: '500+', label: 'Family Offices' },
-    { value: '99.9%', label: 'Platform Uptime' },
-    { value: '50+', label: 'Enterprise Clients' }
+  const metrics = [
+    { value: 'Minutes', label: 'Report Generation' },
+    { value: 'Hours', label: 'Time Recovered' },
+    { value: 'Unlimited', label: 'Client Reports' },
+    { value: 'White-Label', label: 'Firm Branding' }
   ];
 
-  const clientTypes = [
-    'Single Family Offices',
-    'Multi-Family Offices',
-    'Private Banks',
-    'Wealth Advisors',
+  const clientSegments = [
+    'Registered Investment Advisors',
+    'Estate Planning Counsel',
+    'Tax Advisory Practices',
+    'Family Office Principals',
     'Trust Companies',
-    'Estate Attorneys'
+    'Private Banking Groups'
+  ];
+
+  const endorsements = [
+    {
+      quote: "The transition from manual preparation to systematic generation has fundamentally changed our capacity for client service. Report quality exceeds our previous internal standards.",
+      author: "Managing Director",
+      firm: "Multi-Family Office",
+      location: "New York"
+    },
+    {
+      quote: "Our clients recognize the elevated professionalism immediately. The comprehensive analysis supports our advisory fee structure and demonstrates measurable value.",
+      author: "Principal",
+      firm: "Independent RIA",
+      location: "San Francisco"
+    },
+    {
+      quote: "The risk identification methodology surfaces considerations we previously addressed reactively. This systematic approach materially reduces our professional liability exposure.",
+      author: "Partner",
+      firm: "Estate Planning Practice",
+      location: "Chicago"
+    }
   ];
 </script>
 
 <svelte:head>
-  <title>WealthSync.ai | Family Office Operating System</title>
-  <meta name="description" content="The operating system for families managing $50M+ in wealth. Consolidate assets, coordinate advisors, and control your legacy from one platform." />
+  <title>WealthSync | Client Reporting for Wealth Advisors</title>
+  <meta name="description" content="Institutional-quality wealth analysis and client reporting for RIAs, estate counsel, and tax advisors serving substantial private clients." />
 </svelte:head>
 
 <div class="min-h-screen bg-white">
-  <!-- Navigation -->
   <nav class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-cream-200">
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
       <div class="flex items-center justify-between h-16 lg:h-20">
         <a href="/" class="flex items-center gap-3">
           <div class="w-9 h-9 bg-navy-900 rounded-lg flex items-center justify-center">
-            <span class="text-white font-bold text-lg">W</span>
+            <span class="text-white font-semibold text-lg tracking-tight">W</span>
           </div>
-          <span class="font-semibold text-navy-900 text-xl tracking-tight">WealthSync.ai</span>
+          <span class="font-semibold text-navy-900 text-xl tracking-tight">WealthSync</span>
         </a>
 
         <div class="hidden lg:flex items-center gap-10">
-          <a href="#platform" class="text-navy-600 hover:text-navy-900 font-medium transition-colors">Platform</a>
-          <a href="#solutions" class="text-navy-600 hover:text-navy-900 font-medium transition-colors">Solutions</a>
-          <a href="#pricing" class="text-navy-600 hover:text-navy-900 font-medium transition-colors">Pricing</a>
+          <a href="#methodology" class="text-navy-600 hover:text-navy-900 font-medium transition-colors">Methodology</a>
+          <a href="#reports" class="text-navy-600 hover:text-navy-900 font-medium transition-colors">Reports</a>
+          <a href="#engagement" class="text-navy-600 hover:text-navy-900 font-medium transition-colors">Engagement</a>
           <a href="#security" class="text-navy-600 hover:text-navy-900 font-medium transition-colors">Security</a>
         </div>
 
@@ -162,24 +163,28 @@
           <a href="/auth/login" class="hidden sm:block text-navy-600 hover:text-navy-900 font-medium transition-colors">
             Sign In
           </a>
-          <Button href="/auth/signup" variant="primary">Get Started</Button>
+          <Button href="/auth/signup" variant="primary">Request Access</Button>
         </div>
       </div>
     </div>
   </nav>
 
-  <!-- Hero Section - Clean, Institutional -->
   <section class="pt-32 lg:pt-40 pb-20 lg:pb-32">
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
       <div class="max-w-4xl">
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-navy-900 leading-[1.1] tracking-tight font-display">
-          Unified wealth infrastructure.
-          <span class="block text-navy-500">Purpose-built for family offices.</span>
+        <p class="text-accent-600 font-medium tracking-wide text-sm mb-6">
+          Wealth Advisory Infrastructure
+        </p>
+
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-navy-900 leading-[1.08] tracking-tight font-display">
+          Institutional reporting
+          <span class="block text-navy-500">for private wealth practices</span>
         </h1>
 
         <p class="mt-8 text-xl lg:text-2xl text-navy-600 leading-relaxed max-w-3xl">
-          A comprehensive platform for families and institutions managing significant wealth.
-          Consolidate holdings, coordinate advisory teams, and maintain governance across generations.
+          Comprehensive wealth analysis and client documentation prepared to institutional standards.
+          Net worth assessment, risk identification, advisory coordination, and compliance management
+          delivered through your firm's professional identity.
         </p>
 
         <div class="mt-10 flex flex-col sm:flex-row gap-4">
@@ -187,16 +192,25 @@
             Schedule Consultation
             <ArrowRight class="w-5 h-5" />
           </Button>
-          <Button href="#platform" variant="secondary" size="lg">
-            View Platform
+          <Button href="#methodology" variant="secondary" size="lg">
+            View Methodology
           </Button>
         </div>
 
+        <div class="mt-16 grid grid-cols-2 lg:grid-cols-4 gap-8 pt-10 border-t border-cream-200">
+          {#each metrics as metric}
+            <div>
+              <p class="text-2xl lg:text-3xl font-bold text-navy-900 tracking-tight">{metric.value}</p>
+              <p class="text-navy-500 mt-1">{metric.label}</p>
+            </div>
+          {/each}
+        </div>
+
         <div class="mt-16 pt-8 border-t border-cream-200">
-          <p class="text-sm text-navy-500 uppercase tracking-wider font-medium mb-6">Serving leading family offices and institutions</p>
-          <div class="flex flex-wrap gap-x-12 gap-y-4">
-            {#each clientTypes as type}
-              <span class="text-navy-400 font-medium">{type}</span>
+          <p class="text-sm text-navy-400 uppercase tracking-wider font-medium mb-6">Serving Leading Practices</p>
+          <div class="flex flex-wrap gap-x-10 gap-y-3">
+            {#each clientSegments as segment}
+              <span class="text-navy-500">{segment}</span>
             {/each}
           </div>
         </div>
@@ -204,46 +218,108 @@
     </div>
   </section>
 
-  <!-- Stats Section -->
-  <section class="bg-navy-900 py-16">
+  <section class="bg-navy-900 py-20">
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-        {#each stats as stat}
-          <div class="text-center lg:text-left">
-            <p class="text-3xl lg:text-4xl font-bold text-white tracking-tight">{stat.value}</p>
-            <p class="text-navy-300 mt-2">{stat.label}</p>
+      <div class="max-w-3xl">
+        <p class="text-accent-400 font-medium tracking-wide text-sm mb-4">The Challenge</p>
+        <h2 class="text-3xl lg:text-4xl font-bold text-white tracking-tight font-display leading-tight">
+          Professional time allocated to documentation rather than advisory
+        </h2>
+        <p class="mt-6 text-xl text-navy-300 leading-relaxed">
+          Wealth practices dedicate substantial professional hours to report preparation,
+          data consolidation, and document formatting. This administrative burden
+          constrains capacity for substantive client engagement and strategic counsel.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="methodology" class="py-24 lg:py-32 bg-cream-50">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto text-center mb-16">
+        <p class="text-accent-600 font-medium tracking-wide text-sm mb-4">Methodology</p>
+        <h2 class="text-3xl lg:text-4xl font-bold text-navy-900 tracking-tight font-display">
+          Systematic approach to wealth documentation
+        </h2>
+        <p class="mt-6 text-lg text-navy-600">
+          A structured process transforming client data into institutional-quality deliverables.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div class="bg-white rounded-2xl p-8 border border-cream-200 text-center relative">
+          <div class="w-10 h-10 bg-navy-900 text-white rounded-full flex items-center justify-center font-semibold mx-auto mb-6">1</div>
+          <h3 class="text-lg font-semibold text-navy-900 mb-3">Data Consolidation</h3>
+          <p class="text-navy-600">Client information, asset schedules, entity structures, and advisory team composition entered or imported systematically.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-8 border border-cream-200 text-center relative">
+          <div class="w-10 h-10 bg-navy-900 text-white rounded-full flex items-center justify-center font-semibold mx-auto mb-6">2</div>
+          <h3 class="text-lg font-semibold text-navy-900 mb-3">Analysis Generation</h3>
+          <p class="text-navy-600">Automated assessment of portfolio composition, risk exposures, coordination requirements, and compliance obligations.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-8 border border-cream-200 text-center relative">
+          <div class="w-10 h-10 bg-navy-900 text-white rounded-full flex items-center justify-center font-semibold mx-auto mb-6">3</div>
+          <h3 class="text-lg font-semibold text-navy-900 mb-3">Document Delivery</h3>
+          <p class="text-navy-600">Professionally formatted reports bearing firm credentials, prepared for immediate client presentation or archival.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="reports" class="py-24 lg:py-32">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="max-w-3xl mb-16">
+        <p class="text-accent-600 font-medium tracking-wide text-sm mb-4">Report Categories</p>
+        <h2 class="text-3xl lg:text-4xl font-bold text-navy-900 tracking-tight font-display">
+          Five report types. Comprehensive coverage.
+        </h2>
+        <p class="mt-6 text-lg text-navy-600">
+          Each report category addresses distinct client documentation requirements.
+          Generate any combination as circumstances require.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {#each reportTypes as report}
+          <div class="bg-white rounded-xl p-8 border border-cream-200 hover:border-cream-300 hover:shadow-md transition-all duration-300">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-semibold text-navy-900">{report.title}</h3>
+              <span class="text-xs font-medium text-navy-500 bg-cream-100 px-2.5 py-1 rounded">{report.pages}</span>
+            </div>
+            <p class="text-navy-600 leading-relaxed">{report.description}</p>
           </div>
         {/each}
       </div>
     </div>
   </section>
 
-  <!-- Platform Section -->
-  <section id="platform" class="py-24 lg:py-32 bg-cream-50">
+  <section class="py-24 lg:py-32 bg-cream-50">
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
       <div class="max-w-3xl mb-16">
-        <p class="text-accent-600 font-semibold uppercase tracking-wider text-sm mb-4">Platform Capabilities</p>
+        <p class="text-accent-600 font-medium tracking-wide text-sm mb-4">Platform Capabilities</p>
         <h2 class="text-3xl lg:text-4xl font-bold text-navy-900 tracking-tight font-display">
-          Comprehensive infrastructure for complex wealth
+          Infrastructure for institutional-quality delivery
         </h2>
-        <p class="mt-6 text-xl text-navy-600">
-          Replace fragmented systems with an integrated platform designed for institutional-grade wealth management.
+        <p class="mt-6 text-lg text-navy-600">
+          Purpose-built capabilities supporting the documentation requirements of sophisticated wealth practices.
         </p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {#each features as feature}
-          {@const FeatureIcon = feature.icon}
-          {@const colors = featureColors[feature.color]}
-          <div class="bg-white rounded-2xl p-8 border border-cream-200 hover:border-cream-300 hover:shadow-lg transition-all duration-300">
+        {#each capabilities as capability}
+          {@const CapabilityIcon = capability.icon}
+          {@const colors = featureColors[capability.color]}
+          <div class="bg-white rounded-xl p-8 border border-cream-200 hover:border-cream-300 hover:shadow-md transition-all duration-300">
             <div class="w-12 h-12 {colors.bg} rounded-xl flex items-center justify-center mb-6">
-              <FeatureIcon class="w-6 h-6 {colors.icon}" />
+              <CapabilityIcon class="w-6 h-6 {colors.icon}" />
             </div>
-            <h3 class="text-xl font-semibold text-navy-900 mb-3">
-              {feature.title}
+            <h3 class="text-lg font-semibold text-navy-900 mb-3">
+              {capability.title}
             </h3>
             <p class="text-navy-600 leading-relaxed">
-              {feature.description}
+              {capability.description}
             </p>
           </div>
         {/each}
@@ -251,181 +327,142 @@
     </div>
   </section>
 
-  <!-- Problem/Solution Section -->
-  <section id="solutions" class="py-24 lg:py-32">
-    <div class="max-w-7xl mx-auto px-6 lg:px-8">
-      <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-        <div>
-          <p class="text-accent-600 font-semibold uppercase tracking-wider text-sm mb-4">Current Challenges</p>
-          <h2 class="text-3xl lg:text-4xl font-bold text-navy-900 tracking-tight mb-8 font-display">
-            Operational complexity undermines wealth preservation
-          </h2>
-
-          <div class="space-y-6">
-            {#each [
-              "Advisory teams operate in isolation without shared context",
-              "Critical documents dispersed across multiple systems",
-              "Compliance deadlines and distributions require manual tracking",
-              "Family members lack appropriate visibility into holdings",
-              "Significant resources allocated to coordination overhead"
-            ] as problem}
-              <div class="flex items-start gap-4">
-                <div class="w-6 h-6 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <div class="w-2 h-2 rounded-full bg-red-500"></div>
-                </div>
-                <p class="text-navy-700">{problem}</p>
-              </div>
-            {/each}
-          </div>
-        </div>
-
-        <div class="bg-navy-900 rounded-3xl p-10 lg:p-12">
-          <p class="text-accent-400 font-semibold uppercase tracking-wider text-sm mb-4">Integrated Solution</p>
-          <h3 class="text-2xl lg:text-3xl font-bold text-white mb-8 font-display">
-            Unified platform for operational excellence
-          </h3>
-
-          <div class="space-y-6">
-            {#each [
-              "Centralized data access for all authorized stakeholders",
-              "Secure document repository with version control",
-              "Systematic deadline management and notifications",
-              "Configurable access controls by role and entity",
-              "Measurable reduction in administrative overhead"
-            ] as solution}
-              <div class="flex items-start gap-4">
-                <div class="w-6 h-6 rounded-full bg-accent-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <Check class="w-4 h-4 text-accent-400" />
-                </div>
-                <p class="text-navy-200">{solution}</p>
-              </div>
-            {/each}
-          </div>
-
-          <div class="mt-10">
-            <Button href="/auth/signup" variant="accent">
-              View Implementation
-              <ArrowRight class="w-4 h-4" />
-            </Button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Security Section -->
-  <section id="security" class="py-24 lg:py-32 bg-cream-50">
+  <section class="py-24 lg:py-32">
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
       <div class="max-w-3xl mx-auto text-center mb-16">
-        <p class="text-accent-600 font-semibold uppercase tracking-wider text-sm mb-4">Security & Compliance</p>
+        <p class="text-accent-600 font-medium tracking-wide text-sm mb-4">Practitioner Perspective</p>
         <h2 class="text-3xl lg:text-4xl font-bold text-navy-900 tracking-tight font-display">
-          Institutional-grade security architecture
+          Observations from leading practices
         </h2>
-        <p class="mt-6 text-xl text-navy-600">
-          Purpose-built infrastructure meeting the rigorous requirements of family offices and institutional clients.
-        </p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="bg-white rounded-2xl p-8 border border-cream-200 text-center">
-          <div class="w-14 h-14 bg-navy-50 rounded-xl flex items-center justify-center mx-auto mb-6">
-            <Lock class="w-7 h-7 text-navy-600" />
-          </div>
-          <h3 class="text-lg font-semibold text-navy-900 mb-3">256-bit Encryption</h3>
-          <p class="text-navy-600">All data encrypted at rest and in transit using bank-level AES-256 encryption.</p>
-        </div>
-
-        <div class="bg-white rounded-2xl p-8 border border-cream-200 text-center">
-          <div class="w-14 h-14 bg-navy-50 rounded-xl flex items-center justify-center mx-auto mb-6">
-            <Shield class="w-7 h-7 text-navy-600" />
-          </div>
-          <h3 class="text-lg font-semibold text-navy-900 mb-3">SOC 2 Type II</h3>
-          <p class="text-navy-600">Independently audited security controls that meet institutional standards.</p>
-        </div>
-
-        <div class="bg-white rounded-2xl p-8 border border-cream-200 text-center">
-          <div class="w-14 h-14 bg-navy-50 rounded-xl flex items-center justify-center mx-auto mb-6">
-            <Globe class="w-7 h-7 text-navy-600" />
-          </div>
-          <h3 class="text-lg font-semibold text-navy-900 mb-3">GDPR Compliant</h3>
-          <p class="text-navy-600">Full compliance with international data protection regulations.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Pricing -->
-  <section id="pricing" class="py-24 lg:py-32">
-    <div class="max-w-7xl mx-auto px-6 lg:px-8">
-      <div class="max-w-3xl mx-auto text-center mb-16">
-        <p class="text-accent-600 font-semibold uppercase tracking-wider text-sm mb-4">Engagement Options</p>
-        <h2 class="text-3xl lg:text-4xl font-bold text-navy-900 tracking-tight font-display">
-          Structured pricing aligned with your requirements
-        </h2>
-        <p class="mt-6 text-xl text-navy-600">
-          Complimentary 14-day evaluation period. No commitment required.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-        {#each plans as plan}
-          <div class="relative {plan.popular ? 'lg:-translate-y-4' : ''}">
-            {#if plan.popular}
-              <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-accent-500 text-white text-sm font-medium rounded-full">
-                Recommended
-              </div>
-            {/if}
-
-            <div class="h-full bg-white rounded-2xl border-2 {plan.popular ? 'border-accent-500 shadow-xl' : 'border-cream-200'}">
-              <div class="p-8">
-                <h3 class="text-2xl font-bold text-navy-900">{plan.name}</h3>
-                <p class="text-navy-500 mt-2">{plan.description}</p>
-
-                <div class="mt-6 flex items-baseline gap-1">
-                  <span class="text-4xl font-bold text-navy-900">{formatCurrency(plan.price)}</span>
-                  <span class="text-navy-500">/month</span>
-                </div>
-
-                <ul class="mt-8 space-y-4">
-                  {#each plan.features as feature}
-                    <li class="flex items-start gap-3">
-                      <Check class="w-5 h-5 text-accent-500 flex-shrink-0 mt-0.5" />
-                      <span class="text-navy-600">{feature}</span>
-                    </li>
-                  {/each}
-                </ul>
-
-                <div class="mt-8">
-                  <Button
-                    href="/auth/signup?plan={plan.id}"
-                    variant={plan.popular ? 'accent' : 'secondary'}
-                    class="w-full"
-                  >
-                    Begin Evaluation
-                  </Button>
-                </div>
-              </div>
+        {#each endorsements as endorsement}
+          <div class="bg-cream-50 rounded-xl p-8 border border-cream-200">
+            <p class="text-navy-700 leading-relaxed mb-6">"{endorsement.quote}"</p>
+            <div>
+              <p class="font-semibold text-navy-900">{endorsement.author}</p>
+              <p class="text-navy-500 text-sm">{endorsement.firm}</p>
+              <p class="text-navy-400 text-sm">{endorsement.location}</p>
             </div>
           </div>
         {/each}
       </div>
+    </div>
+  </section>
+
+  <section id="security" class="py-24 lg:py-32 bg-cream-50">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto text-center mb-16">
+        <p class="text-accent-600 font-medium tracking-wide text-sm mb-4">Security Architecture</p>
+        <h2 class="text-3xl lg:text-4xl font-bold text-navy-900 tracking-tight font-display">
+          Enterprise-grade data protection
+        </h2>
+        <p class="mt-6 text-lg text-navy-600">
+          Infrastructure designed to meet the security expectations of institutional clients and regulatory requirements.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-xl p-8 border border-cream-200 text-center">
+          <div class="w-14 h-14 bg-navy-50 rounded-xl flex items-center justify-center mx-auto mb-6">
+            <Lock class="w-7 h-7 text-navy-600" />
+          </div>
+          <h3 class="text-lg font-semibold text-navy-900 mb-3">256-bit Encryption</h3>
+          <p class="text-navy-600">Data encrypted at rest and in transit using AES-256 encryption standards.</p>
+        </div>
+
+        <div class="bg-white rounded-xl p-8 border border-cream-200 text-center">
+          <div class="w-14 h-14 bg-navy-50 rounded-xl flex items-center justify-center mx-auto mb-6">
+            <Shield class="w-7 h-7 text-navy-600" />
+          </div>
+          <h3 class="text-lg font-semibold text-navy-900 mb-3">SOC 2 Type II</h3>
+          <p class="text-navy-600">Independently audited security controls meeting institutional compliance standards.</p>
+        </div>
+
+        <div class="bg-white rounded-xl p-8 border border-cream-200 text-center">
+          <div class="w-14 h-14 bg-navy-50 rounded-xl flex items-center justify-center mx-auto mb-6">
+            <Globe class="w-7 h-7 text-navy-600" />
+          </div>
+          <h3 class="text-lg font-semibold text-navy-900 mb-3">Regulatory Compliance</h3>
+          <p class="text-navy-600">Architecture designed for GDPR and international data protection requirements.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="engagement" class="py-24 lg:py-32">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto text-center mb-16">
+        <p class="text-accent-600 font-medium tracking-wide text-sm mb-4">Engagement Terms</p>
+        <h2 class="text-3xl lg:text-4xl font-bold text-navy-900 tracking-tight font-display">
+          Straightforward engagement structure
+        </h2>
+        <p class="mt-6 text-lg text-navy-600">
+          Fourteen-day evaluation period. No commitment required to assess platform capabilities.
+        </p>
+      </div>
+
+      <div class="max-w-lg mx-auto">
+        <div class="bg-white rounded-2xl border-2 border-navy-200 overflow-hidden">
+          <div class="bg-navy-900 text-white text-center py-4">
+            <p class="font-medium tracking-wide">Professional Engagement</p>
+          </div>
+          <div class="p-10">
+            <div class="text-center mb-8">
+              <div class="flex items-baseline justify-center gap-1">
+                <span class="text-5xl font-bold text-navy-900">{formatCurrency(WEALTH_ADVISOR_PLAN_PRICES.professional)}</span>
+                <span class="text-navy-500">per month</span>
+              </div>
+            </div>
+
+            <ul class="space-y-4 mb-10">
+              {#each [
+                'Unlimited client documentation',
+                'All report categories included',
+                'White-label firm branding',
+                'Systematic risk assessment',
+                'Advisory team coordination',
+                'Compliance calendar generation',
+                'Unlimited authorized users',
+                'Priority technical support',
+                'Data export capabilities',
+                'Dedicated onboarding assistance'
+              ] as feature}
+                <li class="flex items-start gap-3">
+                  <Check class="w-5 h-5 text-accent-600 flex-shrink-0 mt-0.5" />
+                  <span class="text-navy-600">{feature}</span>
+                </li>
+              {/each}
+            </ul>
+
+            <Button href="/auth/signup" variant="primary" class="w-full" size="lg">
+              Begin Evaluation
+              <ArrowRight class="w-5 h-5" />
+            </Button>
+
+            <p class="mt-4 text-center text-navy-500 text-sm">
+              No payment information required for evaluation period
+            </p>
+          </div>
+        </div>
+      </div>
 
       <div class="mt-12 text-center">
         <p class="text-navy-600">
-          Need a custom solution? <a href="mailto:enterprise@wealthsync.ai" class="text-accent-600 font-medium hover:underline">Contact our enterprise team</a>
+          Require custom integration or enterprise terms? <a href="mailto:enterprise@wealthsync.ai" class="text-accent-600 font-medium hover:underline">Contact our team</a>
         </p>
       </div>
     </div>
   </section>
 
-  <!-- CTA -->
   <section class="bg-navy-900 py-24 lg:py-32">
     <div class="max-w-4xl mx-auto px-6 lg:px-8 text-center">
       <h2 class="text-3xl lg:text-4xl font-bold text-white tracking-tight font-display">
-        Elevate your family office operations
+        Elevate your client documentation
       </h2>
       <p class="mt-6 text-xl text-navy-300">
-        Serving distinguished family offices and institutions worldwide
+        Institutional-quality wealth reporting infrastructure for leading practices
       </p>
       <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
         <Button href="/auth/signup" variant="accent" size="lg">
@@ -433,41 +470,40 @@
           <ArrowRight class="w-5 h-5" />
         </Button>
         <Button href="mailto:inquiries@wealthsync.ai" variant="secondary" size="lg">
-          Contact Us
+          Contact Our Team
         </Button>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
   <footer class="bg-navy-950 py-16">
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
         <div>
           <h4 class="text-white font-semibold mb-4">Platform</h4>
           <ul class="space-y-3">
-            <li><a href="#platform" class="text-navy-400 hover:text-white transition-colors">Features</a></li>
+            <li><a href="#methodology" class="text-navy-400 hover:text-white transition-colors">Methodology</a></li>
+            <li><a href="#reports" class="text-navy-400 hover:text-white transition-colors">Report Categories</a></li>
+            <li><a href="#engagement" class="text-navy-400 hover:text-white transition-colors">Engagement</a></li>
             <li><a href="#security" class="text-navy-400 hover:text-white transition-colors">Security</a></li>
-            <li><a href="#pricing" class="text-navy-400 hover:text-white transition-colors">Pricing</a></li>
-            <li><a href="/auth/signup" class="text-navy-400 hover:text-white transition-colors">Get Started</a></li>
           </ul>
         </div>
         <div>
-          <h4 class="text-white font-semibold mb-4">Solutions</h4>
+          <h4 class="text-white font-semibold mb-4">Practice Areas</h4>
           <ul class="space-y-3">
-            <li><a href="#solutions" class="text-navy-400 hover:text-white transition-colors">Family Offices</a></li>
-            <li><a href="#solutions" class="text-navy-400 hover:text-white transition-colors">Multi-Family Offices</a></li>
-            <li><a href="#solutions" class="text-navy-400 hover:text-white transition-colors">Wealth Advisors</a></li>
-            <li><a href="#solutions" class="text-navy-400 hover:text-white transition-colors">Institutions</a></li>
+            <li><a href="/auth/signup" class="text-navy-400 hover:text-white transition-colors">Investment Advisory</a></li>
+            <li><a href="/auth/signup" class="text-navy-400 hover:text-white transition-colors">Estate Planning</a></li>
+            <li><a href="/auth/signup" class="text-navy-400 hover:text-white transition-colors">Tax Advisory</a></li>
+            <li><a href="/auth/signup" class="text-navy-400 hover:text-white transition-colors">Family Office</a></li>
           </ul>
         </div>
         <div>
           <h4 class="text-white font-semibold mb-4">Contact</h4>
           <ul class="space-y-3">
-            <li><a href="mailto:inquiries@wealthsync.ai" class="text-navy-400 hover:text-white transition-colors">Sales Inquiries</a></li>
             <li><a href="mailto:support@wealthsync.ai" class="text-navy-400 hover:text-white transition-colors">Support</a></li>
-            <li><a href="mailto:partnerships@wealthsync.ai" class="text-navy-400 hover:text-white transition-colors">Partnerships</a></li>
-            <li><a href="/auth/login" class="text-navy-400 hover:text-white transition-colors">Client Login</a></li>
+            <li><a href="mailto:inquiries@wealthsync.ai" class="text-navy-400 hover:text-white transition-colors">Inquiries</a></li>
+            <li><a href="mailto:inquiries@wealthsync.ai" class="text-navy-400 hover:text-white transition-colors">Consultation</a></li>
+            <li><a href="/auth/login" class="text-navy-400 hover:text-white transition-colors">Sign In</a></li>
           </ul>
         </div>
         <div>
@@ -484,9 +520,9 @@
       <div class="pt-8 border-t border-navy-800 flex flex-col md:flex-row justify-between items-center gap-6">
         <div class="flex items-center gap-3">
           <div class="w-8 h-8 bg-navy-800 rounded-lg flex items-center justify-center">
-            <span class="text-white font-bold">W</span>
+            <span class="text-white font-semibold">W</span>
           </div>
-          <span class="font-semibold text-white tracking-tight">WealthSync.ai</span>
+          <span class="font-semibold text-white tracking-tight">WealthSync</span>
         </div>
 
         <p class="text-navy-500 text-sm">

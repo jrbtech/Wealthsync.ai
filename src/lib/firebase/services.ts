@@ -898,3 +898,343 @@ export async function getAgencyStats(agencyId: string): Promise<{
     reportsThisMonth: reports.filter(r => r.createdAt >= startOfMonth).length
   };
 }
+
+// ============================================
+// WealthSync.ai Services - Wealth Advisor Reports
+// ============================================
+
+import type {
+  WealthAdvisorFirm,
+  AdvisorBranding,
+  ClientProfile,
+  WealthReport,
+  WealthAdvisorActivity
+} from '$lib/types';
+
+// ============ WEALTH ADVISOR FIRM ============
+
+export async function getWealthAdvisorFirm(firmId: string): Promise<WealthAdvisorFirm | null> {
+  const docRef = doc(db, 'wealthAdvisorFirms', firmId);
+  const snapshot = await getDoc(docRef);
+
+  if (!snapshot.exists()) return null;
+
+  return {
+    id: snapshot.id,
+    ...convertTimestamps<WealthAdvisorFirm>(snapshot.data())
+  };
+}
+
+export async function createWealthAdvisorFirm(
+  data: Omit<WealthAdvisorFirm, 'id' | 'createdAt'>
+): Promise<WealthAdvisorFirm> {
+  const firmsRef = collection(db, 'wealthAdvisorFirms');
+
+  const docRef = await addDoc(firmsRef, {
+    ...data,
+    createdAt: serverTimestamp()
+  });
+
+  return {
+    id: docRef.id,
+    ...data,
+    createdAt: new Date()
+  };
+}
+
+export async function updateWealthAdvisorFirm(
+  firmId: string,
+  data: Partial<WealthAdvisorFirm>
+): Promise<void> {
+  const docRef = doc(db, 'wealthAdvisorFirms', firmId);
+  await updateDoc(docRef, {
+    ...data,
+    updatedAt: serverTimestamp()
+  });
+}
+
+export async function updateWealthAdvisorBranding(
+  firmId: string,
+  branding: Partial<AdvisorBranding>
+): Promise<void> {
+  const docRef = doc(db, 'wealthAdvisorFirms', firmId);
+  const firm = await getWealthAdvisorFirm(firmId);
+
+  if (!firm) throw new Error('Wealth advisor firm not found');
+
+  await updateDoc(docRef, {
+    branding: { ...firm.branding, ...branding },
+    updatedAt: serverTimestamp()
+  });
+}
+
+// ============ CLIENT PROFILES ============
+
+export async function getClientProfiles(firmId: string): Promise<ClientProfile[]> {
+  const clientsRef = collection(db, `wealthAdvisorFirms/${firmId}/clients`);
+  const q = query(clientsRef, orderBy('clientName'));
+  const snapshot = await getDocs(q);
+
+  return snapshot.docs.map(doc => ({
+    id: doc.id,
+    ...convertTimestamps<ClientProfile>(doc.data())
+  }));
+}
+
+export async function getActiveClientProfiles(firmId: string): Promise<ClientProfile[]> {
+  const clientsRef = collection(db, `wealthAdvisorFirms/${firmId}/clients`);
+  const q = query(
+    clientsRef,
+    where('status', '==', 'active'),
+    orderBy('clientName')
+  );
+  const snapshot = await getDocs(q);
+
+  return snapshot.docs.map(doc => ({
+    id: doc.id,
+    ...convertTimestamps<ClientProfile>(doc.data())
+  }));
+}
+
+export async function getClientProfile(
+  firmId: string,
+  clientId: string
+): Promise<ClientProfile | null> {
+  const docRef = doc(db, `wealthAdvisorFirms/${firmId}/clients`, clientId);
+  const snapshot = await getDoc(docRef);
+
+  if (!snapshot.exists()) return null;
+
+  return {
+    id: snapshot.id,
+    ...convertTimestamps<ClientProfile>(snapshot.data())
+  };
+}
+
+export async function createClientProfile(
+  firmId: string,
+  data: Omit<ClientProfile, 'id' | 'createdAt' | 'lastUpdated'>
+): Promise<ClientProfile> {
+  const clientsRef = collection(db, `wealthAdvisorFirms/${firmId}/clients`);
+
+  const clientData = {
+    ...data,
+    createdAt: serverTimestamp(),
+    lastUpdated: serverTimestamp()
+  };
+
+  // Convert dates if present
+  if (data.dateOfBirth) {
+    (clientData as any).dateOfBirth = Timestamp.fromDate(data.dateOfBirth);
+  }
+  if (data.spouseDateOfBirth) {
+    (clientData as any).spouseDateOfBirth = Timestamp.fromDate(data.spouseDateOfBirth);
+  }
+
+  const docRef = await addDoc(clientsRef, clientData);
+
+  return {
+    id: docRef.id,
+    ...data,
+    createdAt: new Date(),
+    lastUpdated: new Date()
+  };
+}
+
+export async function updateClientProfile(
+  firmId: string,
+  clientId: string,
+  data: Partial<ClientProfile>
+): Promise<void> {
+  const docRef = doc(db, `wealthAdvisorFirms/${firmId}/clients`, clientId);
+  const updateData: any = { ...data, lastUpdated: serverTimestamp() };
+
+  // Convert dates if present
+  if (data.dateOfBirth) {
+    updateData.dateOfBirth = Timestamp.fromDate(data.dateOfBirth);
+  }
+  if (data.spouseDateOfBirth) {
+    updateData.spouseDateOfBirth = Timestamp.fromDate(data.spouseDateOfBirth);
+  }
+
+  await updateDoc(docRef, updateData);
+}
+
+export async function deleteClientProfile(firmId: string, clientId: string): Promise<void> {
+  const docRef = doc(db, `wealthAdvisorFirms/${firmId}/clients`, clientId);
+  await deleteDoc(docRef);
+}
+
+// ============ WEALTH REPORTS ============
+
+export async function getWealthReports(firmId: string, clientId?: string): Promise<WealthReport[]> {
+  const reportsRef = collection(db, `wealthAdvisorFirms/${firmId}/reports`);
+
+  const constraints: QueryConstraint[] = [orderBy('createdAt', 'desc')];
+  if (clientId) {
+    constraints.unshift(where('clientId', '==', clientId));
+  }
+
+  const q = query(reportsRef, ...constraints);
+  const snapshot = await getDocs(q);
+
+  return snapshot.docs.map(doc => ({
+    id: doc.id,
+    ...convertTimestamps<WealthReport>(doc.data())
+  }));
+}
+
+export async function getRecentWealthReports(
+  firmId: string,
+  count: number = 10
+): Promise<WealthReport[]> {
+  const reportsRef = collection(db, `wealthAdvisorFirms/${firmId}/reports`);
+  const q = query(reportsRef, orderBy('createdAt', 'desc'), limit(count));
+  const snapshot = await getDocs(q);
+
+  return snapshot.docs.map(doc => ({
+    id: doc.id,
+    ...convertTimestamps<WealthReport>(doc.data())
+  }));
+}
+
+export async function getWealthReport(
+  firmId: string,
+  reportId: string
+): Promise<WealthReport | null> {
+  const docRef = doc(db, `wealthAdvisorFirms/${firmId}/reports`, reportId);
+  const snapshot = await getDoc(docRef);
+
+  if (!snapshot.exists()) return null;
+
+  return {
+    id: snapshot.id,
+    ...convertTimestamps<WealthReport>(snapshot.data())
+  };
+}
+
+export async function createWealthReport(
+  firmId: string,
+  data: Omit<WealthReport, 'id' | 'createdAt' | 'viewCount'>
+): Promise<WealthReport> {
+  const reportsRef = collection(db, `wealthAdvisorFirms/${firmId}/reports`);
+
+  const reportData: any = {
+    ...data,
+    viewCount: 0,
+    createdAt: serverTimestamp()
+  };
+
+  // Convert dates
+  if (data.reportDate) {
+    reportData.reportDate = Timestamp.fromDate(data.reportDate);
+  }
+  if (data.periodStart) {
+    reportData.periodStart = Timestamp.fromDate(data.periodStart);
+  }
+  if (data.periodEnd) {
+    reportData.periodEnd = Timestamp.fromDate(data.periodEnd);
+  }
+
+  const docRef = await addDoc(reportsRef, reportData);
+
+  return {
+    id: docRef.id,
+    ...data,
+    viewCount: 0,
+    createdAt: new Date()
+  };
+}
+
+export async function updateWealthReport(
+  firmId: string,
+  reportId: string,
+  data: Partial<WealthReport>
+): Promise<void> {
+  const docRef = doc(db, `wealthAdvisorFirms/${firmId}/reports`, reportId);
+  const updateData: any = { ...data };
+
+  if (data.pdfGeneratedAt) {
+    updateData.pdfGeneratedAt = Timestamp.fromDate(data.pdfGeneratedAt);
+  }
+  if (data.deliveredAt) {
+    updateData.deliveredAt = Timestamp.fromDate(data.deliveredAt);
+  }
+  if (data.reportDate) {
+    updateData.reportDate = Timestamp.fromDate(data.reportDate);
+  }
+
+  await updateDoc(docRef, updateData);
+}
+
+export async function deleteWealthReport(firmId: string, reportId: string): Promise<void> {
+  const docRef = doc(db, `wealthAdvisorFirms/${firmId}/reports`, reportId);
+  await deleteDoc(docRef);
+}
+
+export async function incrementWealthReportViews(firmId: string, reportId: string): Promise<void> {
+  const report = await getWealthReport(firmId, reportId);
+  if (!report) return;
+
+  const docRef = doc(db, `wealthAdvisorFirms/${firmId}/reports`, reportId);
+  await updateDoc(docRef, {
+    viewCount: (report.viewCount || 0) + 1
+  });
+}
+
+// ============ WEALTH ADVISOR ACTIVITY ============
+
+export async function getWealthAdvisorActivity(
+  firmId: string,
+  count: number = 20
+): Promise<WealthAdvisorActivity[]> {
+  const activityRef = collection(db, `wealthAdvisorFirms/${firmId}/activity`);
+  const q = query(activityRef, orderBy('createdAt', 'desc'), limit(count));
+  const snapshot = await getDocs(q);
+
+  return snapshot.docs.map(doc => ({
+    id: doc.id,
+    ...convertTimestamps<WealthAdvisorActivity>(doc.data())
+  }));
+}
+
+export async function logWealthAdvisorActivity(
+  firmId: string,
+  data: Omit<WealthAdvisorActivity, 'id' | 'createdAt'>
+): Promise<void> {
+  const activityRef = collection(db, `wealthAdvisorFirms/${firmId}/activity`);
+
+  await addDoc(activityRef, {
+    ...data,
+    createdAt: serverTimestamp()
+  });
+}
+
+// ============ WEALTH ADVISOR STATS ============
+
+export async function getWealthAdvisorStats(firmId: string): Promise<{
+  totalClients: number;
+  activeClients: number;
+  totalReports: number;
+  reportsThisMonth: number;
+  totalAUM: number;
+}> {
+  const [clients, reports] = await Promise.all([
+    getClientProfiles(firmId),
+    getWealthReports(firmId)
+  ]);
+
+  const now = new Date();
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+  const activeClients = clients.filter(c => c.status === 'active');
+  const totalAUM = activeClients.reduce((sum, c) => sum + (c.estimatedNetWorth || 0), 0);
+
+  return {
+    totalClients: clients.length,
+    activeClients: activeClients.length,
+    totalReports: reports.length,
+    reportsThisMonth: reports.filter(r => r.createdAt >= startOfMonth).length,
+    totalAUM
+  };
+}
