@@ -149,6 +149,7 @@
             phone: '',
             specialty: advisor.specialty as AdvisorSpecialty,
             notes: '',
+            lastContactDate: null,
             createdBy: user.id
           });
         }

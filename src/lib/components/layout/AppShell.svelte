@@ -9,10 +9,11 @@
 
   interface Props {
     title?: string;
+    headerLeft?: Snippet;
     children: Snippet;
   }
 
-  let { title, children }: Props = $props();
+  let { title, headerLeft, children }: Props = $props();
 
   const sidebarOpen = $derived($uiStore.sidebarOpen);
 
@@ -24,7 +25,7 @@
   <Sidebar />
 
   <div class="transition-all duration-300 lg:{sidebarOpen ? 'ml-64' : 'ml-20'}">
-    <Header {title} />
+    <Header {title} {headerLeft} />
 
     <main class="p-4 lg:p-6">
       {@render children()}

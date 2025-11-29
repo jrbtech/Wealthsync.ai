@@ -15,7 +15,7 @@
     FolderOpen,
     FileText,
     FileImage,
-    File,
+    File as FileIcon,
     Download,
     Trash2,
     Upload,
@@ -65,13 +65,13 @@
     investment_statements: FileText,
     legal_documents: FileText,
     property_records: FileText,
-    other: File
+    other: FileIcon
   };
 
   function getFileIcon(mimeType: string) {
     if (mimeType.startsWith('image/')) return FileImage;
     if (mimeType.includes('pdf')) return FileText;
-    return File;
+    return FileIcon;
   }
 
   onMount(async () => {

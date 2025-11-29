@@ -30,14 +30,14 @@ import type {
 } from '$lib/types';
 
 // Helper to convert Firestore timestamps to Date
-function convertTimestamps<T>(data: DocumentData): T {
+function convertTimestamps<T>(data: DocumentData): Omit<T, 'id'> {
   const result: any = { ...data };
   for (const key in result) {
     if (result[key] instanceof Timestamp) {
       result[key] = result[key].toDate();
     }
   }
-  return result as T;
+  return result as Omit<T, 'id'>;
 }
 
 // ============ FAMILY ============

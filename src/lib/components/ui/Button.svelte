@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
 
-  type Variant = 'primary' | 'secondary' | 'gold' | 'ghost' | 'danger';
+  type Variant = 'primary' | 'secondary' | 'gold' | 'ghost' | 'danger' | 'accent';
   type Size = 'sm' | 'md' | 'lg';
 
   interface Props {
@@ -35,7 +35,8 @@
     secondary: 'bg-cream-100 text-navy-800 border border-cream-400 hover:bg-cream-300 focus:ring-navy-500',
     gold: 'bg-gold-500 text-navy-900 hover:bg-gold-400 focus:ring-gold-500',
     ghost: 'bg-transparent text-navy-700 hover:bg-cream-300 focus:ring-navy-500',
-    danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500'
+    danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500',
+    accent: 'bg-accent-500 text-white hover:bg-accent-600 focus:ring-accent-500'
   };
 
   const sizeClasses: Record<Size, string> = {

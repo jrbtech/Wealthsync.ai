@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { Snippet } from 'svelte';
   import { Menu, Search, LogOut, User, CreditCard, Command } from 'lucide-svelte';
   import { uiStore } from '$lib/stores/ui';
   import { authStore, currentUser } from '$lib/stores/auth';
@@ -9,9 +10,10 @@
 
   interface Props {
     title?: string;
+    headerLeft?: Snippet;
   }
 
-  let { title }: Props = $props();
+  let { title, headerLeft }: Props = $props();
 
   const sidebarOpen = $derived($uiStore.sidebarOpen);
   const user = $derived($currentUser);
@@ -49,6 +51,10 @@
       >
         <Menu class="w-5 h-5" />
       </button>
+
+      {#if headerLeft}
+        {@render headerLeft()}
+      {/if}
 
       {#if title}
         <h1 class="text-xl font-semibold text-navy-900 tracking-tight">{title}</h1>

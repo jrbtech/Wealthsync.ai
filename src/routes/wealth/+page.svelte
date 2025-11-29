@@ -192,11 +192,15 @@
 
     try {
       if (editingEntity) {
-        await updateEntity(family.id, editingEntity.id, entityFormData);
+        const updateData = {
+          name: entityFormData.name,
+          type: entityFormData.type as EntityType
+        };
+        await updateEntity(family.id, editingEntity.id, updateData);
         success('Entity updated');
       } else {
         await createEntity(family.id, {
-          ...entityFormData,
+          name: entityFormData.name,
           type: entityFormData.type as EntityType,
           createdBy: user.id
         });

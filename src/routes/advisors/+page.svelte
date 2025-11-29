@@ -175,17 +175,29 @@
 
     try {
       if (editingAdvisor) {
-        await updateAdvisor(family.id, editingAdvisor.id, formData);
+        const updateData = {
+          name: formData.name,
+          firm: formData.firm,
+          email: formData.email,
+          phone: formData.phone,
+          specialty: formData.specialty as AdvisorSpecialty,
+          notes: formData.notes
+        };
+        await updateAdvisor(family.id, editingAdvisor.id, updateData);
 
         advisors = advisors.map((a) =>
-          a.id === editingAdvisor!.id ? { ...a, ...formData } : a
+          a.id === editingAdvisor!.id ? { ...a, ...updateData } : a
         );
 
         success('Advisor updated');
       } else {
         const newAdvisor = await createAdvisor(family.id, {
-          ...formData,
+          name: formData.name,
+          firm: formData.firm,
+          email: formData.email,
+          phone: formData.phone,
           specialty: formData.specialty as AdvisorSpecialty,
+          notes: formData.notes,
           lastContactDate: null,
           createdBy: user.id
         });

@@ -1,6 +1,6 @@
 <script lang="ts">
   interface Props {
-    type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'search';
+    type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'search' | 'date' | 'datetime-local' | 'time';
     name?: string;
     id?: string;
     value?: string | number;
@@ -10,7 +10,7 @@
     hint?: string;
     disabled?: boolean;
     required?: boolean;
-    autocomplete?: string;
+    autocomplete?: AutoFill;
     class?: string;
     oninput?: (e: Event & { currentTarget: HTMLInputElement }) => void;
     onblur?: (e: Event & { currentTarget: HTMLInputElement }) => void;

@@ -20,6 +20,7 @@ export interface Family {
   plan: PlanType;
   stripeCustomerId?: string;
   stripeSubscriptionId?: string;
+  onboardingCompleted?: boolean;
   createdAt: Date;
 }
 
@@ -205,7 +206,8 @@ export type ActivityType =
   | 'document_uploaded'
   | 'meeting_logged'
   | 'wealth_updated'
-  | 'family_member_invited';
+  | 'family_member_invited'
+  | 'onboarding_completed';
 
 export interface Activity {
   id: string;

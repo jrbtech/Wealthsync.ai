@@ -102,8 +102,16 @@
     saving = true;
 
     try {
-      await updateAdvisor(family.id, advisor.id, formData);
-      advisor = { ...advisor, ...formData };
+      const updateData = {
+        name: formData.name,
+        firm: formData.firm,
+        email: formData.email,
+        phone: formData.phone,
+        specialty: formData.specialty as AdvisorSpecialty,
+        notes: formData.notes
+      };
+      await updateAdvisor(family.id, advisor.id, updateData);
+      advisor = { ...advisor, ...updateData };
       editModalOpen = false;
       success('Advisor updated');
     } catch (err) {
@@ -250,7 +258,7 @@
           {#snippet header()}
             <div class="flex items-center justify-between">
               <h2 class="font-semibold text-navy-800">Meeting History</h2>
-              <Button href="/meetings?advisor={advisor.id}&new=true" variant="ghost" size="sm">
+              <Button href="/meetings?advisor={advisor?.id}&new=true" variant="ghost" size="sm">
                 Add Meeting
               </Button>
             </div>
