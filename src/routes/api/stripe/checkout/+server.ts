@@ -10,7 +10,8 @@ function getStripe() {
   return new Stripe(env.STRIPE_SECRET_KEY);
 }
 
-function getPriceIds(): Record<string, string> {
+// Family Office Plans (WealthSync)
+function getFamilyPriceIds(): Record<string, string> {
   return {
     foundation: env.STRIPE_FOUNDATION_PRICE_ID || '',
     growth: env.STRIPE_GROWTH_PRICE_ID || '',
@@ -18,17 +19,29 @@ function getPriceIds(): Record<string, string> {
   };
 }
 
+// Agency Plans (AgencyForge)
+function getAgencyPriceIds(): Record<string, string> {
+  return {
+    starter: env.STRIPE_AGENCY_STARTER_PRICE_ID || '',
+    professional: env.STRIPE_AGENCY_PROFESSIONAL_PRICE_ID || '',
+    unlimited: env.STRIPE_AGENCY_UNLIMITED_PRICE_ID || ''
+  };
+}
+
 export const POST: RequestHandler = async ({ request, url }) => {
   try {
     const stripe = getStripe();
-    const { familyId, planId } = await request.json();
+    const { familyId, agencyId, planId, planType = 'family' } = await request.json();
 
-    if (!familyId || !planId) {
-      throw error(400, 'Family ID and plan ID are required');
+    const entityId = agencyId || familyId;
+    if (!entityId || !planId) {
+      throw error(400, 'Entity ID and plan ID are required');
     }
 
-    const priceIds = getPriceIds();
+    // Get the appropriate price IDs based on plan type
+    const priceIds = planType === 'agency' ? getAgencyPriceIds() : getFamilyPriceIds();
     const priceId = priceIds[planId];
+
     if (!priceId) {
       throw error(400, 'Invalid plan ID');
     }
@@ -45,8 +58,9 @@ export const POST: RequestHandler = async ({ request, url }) => {
       success_url: `${url.origin}/settings/billing?success=true`,
       cancel_url: `${url.origin}/settings/billing?canceled=true`,
       metadata: {
-        familyId,
-        planId
+        entityId,
+        planId,
+        planType
       }
     });
 

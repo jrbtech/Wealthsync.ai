@@ -551,3 +551,350 @@ export async function createSnapshot(
     ...data
   };
 }
+
+// ============================================
+// AgencyForge.ai Services (SEO/PPC Agency Reports)
+// ============================================
+
+import type {
+  Agency,
+  AgencyBranding,
+  ClientProject,
+  Report,
+  AnalyticsData,
+  AgencyActivity
+} from '$lib/types';
+
+// ============ AGENCY ============
+
+export async function getAgency(agencyId: string): Promise<Agency | null> {
+  const docRef = doc(db, 'agencies', agencyId);
+  const snapshot = await getDoc(docRef);
+
+  if (!snapshot.exists()) return null;
+
+  return {
+    id: snapshot.id,
+    ...convertTimestamps<Agency>(snapshot.data())
+  };
+}
+
+export async function updateAgency(agencyId: string, data: Partial<Agency>): Promise<void> {
+  const docRef = doc(db, 'agencies', agencyId);
+  await updateDoc(docRef, {
+    ...data,
+    updatedAt: serverTimestamp()
+  });
+}
+
+export async function updateAgencyBranding(
+  agencyId: string,
+  branding: Partial<AgencyBranding>
+): Promise<void> {
+  const docRef = doc(db, 'agencies', agencyId);
+  const agency = await getAgency(agencyId);
+
+  if (!agency) throw new Error('Agency not found');
+
+  await updateDoc(docRef, {
+    branding: { ...agency.branding, ...branding },
+    updatedAt: serverTimestamp()
+  });
+}
+
+// ============ CLIENT PROJECTS ============
+
+export async function getClientProjects(agencyId: string): Promise<ClientProject[]> {
+  const projectsRef = collection(db, `agencies/${agencyId}/projects`);
+  const q = query(projectsRef, orderBy('createdAt', 'desc'));
+  const snapshot = await getDocs(q);
+
+  return snapshot.docs.map(doc => ({
+    id: doc.id,
+    ...convertTimestamps<ClientProject>(doc.data())
+  }));
+}
+
+export async function getActiveClientProjects(agencyId: string): Promise<ClientProject[]> {
+  const projectsRef = collection(db, `agencies/${agencyId}/projects`);
+  const q = query(
+    projectsRef,
+    where('status', '==', 'active'),
+    orderBy('clientName')
+  );
+  const snapshot = await getDocs(q);
+
+  return snapshot.docs.map(doc => ({
+    id: doc.id,
+    ...convertTimestamps<ClientProject>(doc.data())
+  }));
+}
+
+export async function getClientProject(
+  agencyId: string,
+  projectId: string
+): Promise<ClientProject | null> {
+  const docRef = doc(db, `agencies/${agencyId}/projects`, projectId);
+  const snapshot = await getDoc(docRef);
+
+  if (!snapshot.exists()) return null;
+
+  return {
+    id: snapshot.id,
+    ...convertTimestamps<ClientProject>(snapshot.data())
+  };
+}
+
+export async function createClientProject(
+  agencyId: string,
+  data: Omit<ClientProject, 'id' | 'createdAt'>
+): Promise<ClientProject> {
+  const projectsRef = collection(db, `agencies/${agencyId}/projects`);
+
+  const docRef = await addDoc(projectsRef, {
+    ...data,
+    startDate: Timestamp.fromDate(data.startDate),
+    createdAt: serverTimestamp()
+  });
+
+  return {
+    id: docRef.id,
+    ...data,
+    createdAt: new Date()
+  };
+}
+
+export async function updateClientProject(
+  agencyId: string,
+  projectId: string,
+  data: Partial<ClientProject>
+): Promise<void> {
+  const docRef = doc(db, `agencies/${agencyId}/projects`, projectId);
+  const updateData: any = { ...data };
+
+  if (data.startDate) {
+    updateData.startDate = Timestamp.fromDate(data.startDate);
+  }
+
+  await updateDoc(docRef, updateData);
+}
+
+export async function deleteClientProject(agencyId: string, projectId: string): Promise<void> {
+  const docRef = doc(db, `agencies/${agencyId}/projects`, projectId);
+  await deleteDoc(docRef);
+}
+
+// ============ REPORTS ============
+
+export async function getReports(agencyId: string, projectId?: string): Promise<Report[]> {
+  const reportsRef = collection(db, `agencies/${agencyId}/reports`);
+
+  const constraints: QueryConstraint[] = [orderBy('createdAt', 'desc')];
+  if (projectId) {
+    constraints.unshift(where('projectId', '==', projectId));
+  }
+
+  const q = query(reportsRef, ...constraints);
+  const snapshot = await getDocs(q);
+
+  return snapshot.docs.map(doc => ({
+    id: doc.id,
+    ...convertTimestamps<Report>(doc.data())
+  }));
+}
+
+export async function getRecentReports(
+  agencyId: string,
+  count: number = 10
+): Promise<Report[]> {
+  const reportsRef = collection(db, `agencies/${agencyId}/reports`);
+  const q = query(reportsRef, orderBy('createdAt', 'desc'), limit(count));
+  const snapshot = await getDocs(q);
+
+  return snapshot.docs.map(doc => ({
+    id: doc.id,
+    ...convertTimestamps<Report>(doc.data())
+  }));
+}
+
+export async function getReport(agencyId: string, reportId: string): Promise<Report | null> {
+  const docRef = doc(db, `agencies/${agencyId}/reports`, reportId);
+  const snapshot = await getDoc(docRef);
+
+  if (!snapshot.exists()) return null;
+
+  return {
+    id: snapshot.id,
+    ...convertTimestamps<Report>(snapshot.data())
+  };
+}
+
+export async function createReport(
+  agencyId: string,
+  data: Omit<Report, 'id' | 'createdAt' | 'viewCount'>
+): Promise<Report> {
+  const reportsRef = collection(db, `agencies/${agencyId}/reports`);
+
+  const docRef = await addDoc(reportsRef, {
+    ...data,
+    viewCount: 0,
+    createdAt: serverTimestamp()
+  });
+
+  return {
+    id: docRef.id,
+    ...data,
+    viewCount: 0,
+    createdAt: new Date()
+  };
+}
+
+export async function updateReport(
+  agencyId: string,
+  reportId: string,
+  data: Partial<Report>
+): Promise<void> {
+  const docRef = doc(db, `agencies/${agencyId}/reports`, reportId);
+  const updateData: any = { ...data };
+
+  if (data.pdfGeneratedAt) {
+    updateData.pdfGeneratedAt = Timestamp.fromDate(data.pdfGeneratedAt);
+  }
+  if (data.deliveredAt) {
+    updateData.deliveredAt = Timestamp.fromDate(data.deliveredAt);
+  }
+
+  await updateDoc(docRef, updateData);
+}
+
+export async function deleteReport(agencyId: string, reportId: string): Promise<void> {
+  const docRef = doc(db, `agencies/${agencyId}/reports`, reportId);
+  await deleteDoc(docRef);
+}
+
+export async function incrementReportViews(agencyId: string, reportId: string): Promise<void> {
+  const report = await getReport(agencyId, reportId);
+  if (!report) return;
+
+  const docRef = doc(db, `agencies/${agencyId}/reports`, reportId);
+  await updateDoc(docRef, {
+    viewCount: (report.viewCount || 0) + 1
+  });
+}
+
+// ============ ANALYTICS DATA ============
+
+export async function getAnalyticsData(
+  agencyId: string,
+  projectId: string
+): Promise<AnalyticsData[]> {
+  const analyticsRef = collection(db, `agencies/${agencyId}/projects/${projectId}/analytics`);
+  const q = query(analyticsRef, orderBy('uploadedAt', 'desc'));
+  const snapshot = await getDocs(q);
+
+  return snapshot.docs.map(doc => ({
+    id: doc.id,
+    ...convertTimestamps<AnalyticsData>(doc.data())
+  }));
+}
+
+export async function getLatestAnalytics(
+  agencyId: string,
+  projectId: string
+): Promise<AnalyticsData | null> {
+  const analyticsRef = collection(db, `agencies/${agencyId}/projects/${projectId}/analytics`);
+  const q = query(analyticsRef, orderBy('uploadedAt', 'desc'), limit(1));
+  const snapshot = await getDocs(q);
+
+  if (snapshot.empty) return null;
+
+  const doc = snapshot.docs[0];
+  return {
+    id: doc.id,
+    ...convertTimestamps<AnalyticsData>(doc.data())
+  };
+}
+
+export async function createAnalyticsData(
+  agencyId: string,
+  projectId: string,
+  data: Omit<AnalyticsData, 'id' | 'uploadedAt'>
+): Promise<AnalyticsData> {
+  const analyticsRef = collection(db, `agencies/${agencyId}/projects/${projectId}/analytics`);
+
+  const docRef = await addDoc(analyticsRef, {
+    ...data,
+    dateRange: {
+      start: Timestamp.fromDate(data.dateRange.start),
+      end: Timestamp.fromDate(data.dateRange.end)
+    },
+    uploadedAt: serverTimestamp()
+  });
+
+  return {
+    id: docRef.id,
+    ...data,
+    uploadedAt: new Date()
+  };
+}
+
+export async function deleteAnalyticsData(
+  agencyId: string,
+  projectId: string,
+  analyticsId: string
+): Promise<void> {
+  const docRef = doc(db, `agencies/${agencyId}/projects/${projectId}/analytics`, analyticsId);
+  await deleteDoc(docRef);
+}
+
+// ============ AGENCY ACTIVITY ============
+
+export async function getAgencyActivity(
+  agencyId: string,
+  count: number = 20
+): Promise<AgencyActivity[]> {
+  const activityRef = collection(db, `agencies/${agencyId}/activity`);
+  const q = query(activityRef, orderBy('createdAt', 'desc'), limit(count));
+  const snapshot = await getDocs(q);
+
+  return snapshot.docs.map(doc => ({
+    id: doc.id,
+    ...convertTimestamps<AgencyActivity>(doc.data())
+  }));
+}
+
+export async function logAgencyActivity(
+  agencyId: string,
+  data: Omit<AgencyActivity, 'id' | 'createdAt'>
+): Promise<void> {
+  const activityRef = collection(db, `agencies/${agencyId}/activity`);
+
+  await addDoc(activityRef, {
+    ...data,
+    createdAt: serverTimestamp()
+  });
+}
+
+// ============ AGENCY STATS ============
+
+export async function getAgencyStats(agencyId: string): Promise<{
+  totalClients: number;
+  activeClients: number;
+  totalReports: number;
+  reportsThisMonth: number;
+}> {
+  const [projects, reports] = await Promise.all([
+    getClientProjects(agencyId),
+    getReports(agencyId)
+  ]);
+
+  const now = new Date();
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+  return {
+    totalClients: projects.length,
+    activeClients: projects.filter(p => p.status === 'active').length,
+    totalReports: reports.length,
+    reportsThisMonth: reports.filter(r => r.createdAt >= startOfMonth).length
+  };
+}

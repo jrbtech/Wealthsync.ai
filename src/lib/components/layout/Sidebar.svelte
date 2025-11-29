@@ -11,10 +11,15 @@
     Sparkles,
     Settings,
     ChevronLeft,
-    X
+    X,
+    Building,
+    BarChart3,
+    Palette,
+    Globe
   } from 'lucide-svelte';
 
-  const navigation = [
+  // WealthSync navigation (Family Office)
+  const wealthNavigation = [
     { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
     { name: 'Advisors', href: '/advisors', icon: Users },
     { name: 'Deadlines', href: '/deadlines', icon: Calendar },
@@ -23,9 +28,23 @@
     { name: 'Meetings', href: '/meetings', icon: MessageSquare }
   ];
 
-  const aiNavigation = [
-    { name: 'AI Assistant', href: '/ai/summarize', icon: Sparkles }
+  // AgencyForge navigation (SEO Agencies)
+  const agencyNavigation = [
+    { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+    { name: 'Clients', href: '/clients', icon: Building },
+    { name: 'Reports', href: '/reports', icon: BarChart3 },
+    { name: 'Branding', href: '/settings/branding', icon: Palette }
   ];
+
+  const aiNavigation = [
+    { name: 'AI Reports', href: '/ai/summarize', icon: Sparkles }
+  ];
+
+  // Detect which product context we're in based on URL
+  const isAgencyContext = $derived($page.url.pathname.startsWith('/clients') || $page.url.pathname.startsWith('/reports'));
+
+  // Use appropriate navigation
+  const navigation = $derived(isAgencyContext ? agencyNavigation : wealthNavigation);
 
   const sidebarOpen = $derived($uiStore.sidebarOpen);
   const mobileMenuOpen = $derived($uiStore.mobileMenuOpen);
