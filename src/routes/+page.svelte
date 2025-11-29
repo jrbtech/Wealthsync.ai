@@ -162,7 +162,7 @@
           <a href="/auth/login" class="hidden sm:block text-navy-600 hover:text-navy-900 font-medium transition-colors">
             Sign In
           </a>
-          <Button href="/auth/signup" variant="primary">Request Demo</Button>
+          <Button href="/auth/signup" variant="primary">Get Started</Button>
         </div>
       </div>
     </div>
@@ -449,25 +449,25 @@
             <li><a href="#platform" class="text-navy-400 hover:text-white transition-colors">Features</a></li>
             <li><a href="#security" class="text-navy-400 hover:text-white transition-colors">Security</a></li>
             <li><a href="#pricing" class="text-navy-400 hover:text-white transition-colors">Pricing</a></li>
-            <li><a href="/docs" class="text-navy-400 hover:text-white transition-colors">Documentation</a></li>
+            <li><a href="/auth/signup" class="text-navy-400 hover:text-white transition-colors">Get Started</a></li>
           </ul>
         </div>
         <div>
           <h4 class="text-white font-semibold mb-4">Solutions</h4>
           <ul class="space-y-3">
-            <li><a href="/solutions/sfo" class="text-navy-400 hover:text-white transition-colors">Single Family Offices</a></li>
-            <li><a href="/solutions/mfo" class="text-navy-400 hover:text-white transition-colors">Multi-Family Offices</a></li>
-            <li><a href="/solutions/advisors" class="text-navy-400 hover:text-white transition-colors">Wealth Advisors</a></li>
-            <li><a href="/solutions/institutions" class="text-navy-400 hover:text-white transition-colors">Institutions</a></li>
+            <li><a href="#solutions" class="text-navy-400 hover:text-white transition-colors">Family Offices</a></li>
+            <li><a href="#solutions" class="text-navy-400 hover:text-white transition-colors">Multi-Family Offices</a></li>
+            <li><a href="#solutions" class="text-navy-400 hover:text-white transition-colors">Wealth Advisors</a></li>
+            <li><a href="#solutions" class="text-navy-400 hover:text-white transition-colors">Institutions</a></li>
           </ul>
         </div>
         <div>
-          <h4 class="text-white font-semibold mb-4">Company</h4>
+          <h4 class="text-white font-semibold mb-4">Contact</h4>
           <ul class="space-y-3">
-            <li><a href="/about" class="text-navy-400 hover:text-white transition-colors">About</a></li>
-            <li><a href="/careers" class="text-navy-400 hover:text-white transition-colors">Careers</a></li>
-            <li><a href="/blog" class="text-navy-400 hover:text-white transition-colors">Blog</a></li>
-            <li><a href="/press" class="text-navy-400 hover:text-white transition-colors">Press</a></li>
+            <li><a href="mailto:inquiries@wealthsync.ai" class="text-navy-400 hover:text-white transition-colors">Sales Inquiries</a></li>
+            <li><a href="mailto:support@wealthsync.ai" class="text-navy-400 hover:text-white transition-colors">Support</a></li>
+            <li><a href="mailto:partnerships@wealthsync.ai" class="text-navy-400 hover:text-white transition-colors">Partnerships</a></li>
+            <li><a href="/auth/login" class="text-navy-400 hover:text-white transition-colors">Client Login</a></li>
           </ul>
         </div>
         <div>
@@ -475,8 +475,8 @@
           <ul class="space-y-3">
             <li><a href="/privacy" class="text-navy-400 hover:text-white transition-colors">Privacy Policy</a></li>
             <li><a href="/terms" class="text-navy-400 hover:text-white transition-colors">Terms of Service</a></li>
-            <li><a href="/security" class="text-navy-400 hover:text-white transition-colors">Security</a></li>
-            <li><a href="/compliance" class="text-navy-400 hover:text-white transition-colors">Compliance</a></li>
+            <li><a href="#security" class="text-navy-400 hover:text-white transition-colors">Security</a></li>
+            <li><a href="mailto:compliance@wealthsync.ai" class="text-navy-400 hover:text-white transition-colors">Compliance</a></li>
           </ul>
         </div>
       </div>
