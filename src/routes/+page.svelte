@@ -26,38 +26,38 @@
   const features = [
     {
       icon: Layers,
-      title: 'Consolidate',
-      description: 'Aggregate all accounts, assets, and entities into a single unified view. From liquid investments to real estate, private equity to art collections.',
+      title: 'Consolidation',
+      description: 'Aggregate accounts, assets, and legal entities into a unified view. Liquid investments, real estate, private equity, and alternative holdings.',
       color: 'accent'
     },
     {
       icon: Eye,
-      title: 'Visualize',
-      description: 'Real-time dashboards that transform complex data into actionable insights. Track performance, allocation, and risk across your entire portfolio.',
+      title: 'Visibility',
+      description: 'Real-time dashboards providing comprehensive insights. Performance tracking, asset allocation, and risk analysis across the entire portfolio.',
       color: 'navy'
     },
     {
       icon: Users,
-      title: 'Coordinate',
-      description: 'Keep your CPA, estate attorney, wealth manager, and family members aligned. One platform for all stakeholder communication.',
+      title: 'Coordination',
+      description: 'Align advisors, family members, and staff on a single platform. Structured communication for CPAs, estate attorneys, and wealth managers.',
       color: 'emerald'
     },
     {
       icon: Shield,
-      title: 'Protect',
-      description: 'Bank-level encryption, SOC 2 Type II compliance, and granular access controls. Your data stays yours.',
+      title: 'Protection',
+      description: 'Bank-level encryption, SOC 2 Type II compliance, and granular access controls. Data sovereignty and privacy by design.',
       color: 'purple'
     },
     {
       icon: Sparkles,
-      title: 'Automate',
-      description: 'AI-powered document summarization, deadline tracking, and report generation. Reduce manual work by 80%.',
+      title: 'Automation',
+      description: 'Document processing, deadline management, and report generation. Streamlined workflows for operational efficiency.',
       color: 'orange'
     },
     {
       icon: BarChart3,
-      title: 'Report',
-      description: 'Generate institutional-quality reports for family meetings, tax planning, and advisor reviews in minutes.',
+      title: 'Reporting',
+      description: 'Institutional-quality reports for family meetings, tax planning, and advisor reviews. Customizable templates and scheduled delivery.',
       color: 'blue'
     }
   ];
@@ -76,26 +76,26 @@
       id: 'foundation',
       name: 'Foundation',
       price: PLAN_PRICES.foundation,
-      description: 'For families beginning to organize their wealth',
+      description: 'Essential infrastructure for emerging family offices',
       features: [
         'Up to 3 family members',
         '10 advisor connections',
         '5GB secure document storage',
-        'Deadline tracking and reminders',
-        'Standard email support'
+        'Deadline tracking',
+        'Email support'
       ]
     },
     {
       id: 'growth',
       name: 'Growth',
       price: PLAN_PRICES.growth,
-      description: 'For active family offices',
+      description: 'Comprehensive platform for active family offices',
       popular: true,
       features: [
         'Up to 8 family members',
         'Unlimited advisor connections',
         '25GB secure document storage',
-        'AI document summarization',
+        'Document processing',
         'Priority support',
         'Custom reporting'
       ]
@@ -104,12 +104,12 @@
       id: 'legacy',
       name: 'Legacy',
       price: PLAN_PRICES.legacy,
-      description: 'For established multi-generational offices',
+      description: 'Enterprise solution for multi-generational offices',
       features: [
         'Unlimited family members',
         'Unlimited advisor connections',
         '100GB secure document storage',
-        'Full AI automation suite',
+        'Full automation suite',
         'Dedicated account manager',
         'Custom integrations',
         'API access'
@@ -168,32 +168,32 @@
     </div>
   </nav>
 
-  <!-- Hero Section - Clean, Enterprise-grade like Addepar -->
+  <!-- Hero Section - Clean, Institutional -->
   <section class="pt-32 lg:pt-40 pb-20 lg:pb-32">
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
       <div class="max-w-4xl">
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-navy-900 leading-[1.1] tracking-tight">
-          Your complete wealth picture.
-          <span class="block text-navy-500">One platform.</span>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-navy-900 leading-[1.1] tracking-tight font-display">
+          Unified wealth infrastructure.
+          <span class="block text-navy-500">Purpose-built for family offices.</span>
         </h1>
 
         <p class="mt-8 text-xl lg:text-2xl text-navy-600 leading-relaxed max-w-3xl">
-          WealthSync.ai is the operating system for families managing $50M+ in assets.
-          Consolidate accounts, coordinate advisors, and control your legacy from a single, secure platform.
+          A comprehensive platform for families and institutions managing significant wealth.
+          Consolidate holdings, coordinate advisory teams, and maintain governance across generations.
         </p>
 
         <div class="mt-10 flex flex-col sm:flex-row gap-4">
           <Button href="/auth/signup" variant="primary" size="lg">
-            Request a Demo
+            Schedule Consultation
             <ArrowRight class="w-5 h-5" />
           </Button>
           <Button href="#platform" variant="secondary" size="lg">
-            See the Platform
+            View Platform
           </Button>
         </div>
 
         <div class="mt-16 pt-8 border-t border-cream-200">
-          <p class="text-sm text-navy-500 uppercase tracking-wider font-medium mb-6">Trusted by leading family offices and institutions</p>
+          <p class="text-sm text-navy-500 uppercase tracking-wider font-medium mb-6">Serving leading family offices and institutions</p>
           <div class="flex flex-wrap gap-x-12 gap-y-4">
             {#each clientTypes as type}
               <span class="text-navy-400 font-medium">{type}</span>
@@ -222,12 +222,12 @@
   <section id="platform" class="py-24 lg:py-32 bg-cream-50">
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
       <div class="max-w-3xl mb-16">
-        <p class="text-accent-600 font-semibold uppercase tracking-wider text-sm mb-4">The Platform</p>
-        <h2 class="text-3xl lg:text-4xl font-bold text-navy-900 tracking-tight">
-          Everything you need to manage complex wealth
+        <p class="text-accent-600 font-semibold uppercase tracking-wider text-sm mb-4">Platform Capabilities</p>
+        <h2 class="text-3xl lg:text-4xl font-bold text-navy-900 tracking-tight font-display">
+          Comprehensive infrastructure for complex wealth
         </h2>
         <p class="mt-6 text-xl text-navy-600">
-          Replace fragmented spreadsheets, scattered documents, and disconnected advisors with one unified platform.
+          Replace fragmented systems with an integrated platform designed for institutional-grade wealth management.
         </p>
       </div>
 
@@ -256,18 +256,18 @@
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
       <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
         <div>
-          <p class="text-accent-600 font-semibold uppercase tracking-wider text-sm mb-4">The Challenge</p>
-          <h2 class="text-3xl lg:text-4xl font-bold text-navy-900 tracking-tight mb-8">
-            Managing wealth shouldn't require managing chaos
+          <p class="text-accent-600 font-semibold uppercase tracking-wider text-sm mb-4">Current Challenges</p>
+          <h2 class="text-3xl lg:text-4xl font-bold text-navy-900 tracking-tight mb-8 font-display">
+            Operational complexity undermines wealth preservation
           </h2>
 
           <div class="space-y-6">
             {#each [
-              "Your wealth manager doesn't communicate with your CPA",
-              "Critical documents are scattered across email, drives, and filing cabinets",
-              "Tax deadlines and trust distributions slip through the cracks",
-              "Family members lack visibility into the overall picture",
-              "You're paying $100K-500K annually just to coordinate everyone"
+              "Advisory teams operate in isolation without shared context",
+              "Critical documents dispersed across multiple systems",
+              "Compliance deadlines and distributions require manual tracking",
+              "Family members lack appropriate visibility into holdings",
+              "Significant resources allocated to coordination overhead"
             ] as problem}
               <div class="flex items-start gap-4">
                 <div class="w-6 h-6 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -280,18 +280,18 @@
         </div>
 
         <div class="bg-navy-900 rounded-3xl p-10 lg:p-12">
-          <p class="text-accent-400 font-semibold uppercase tracking-wider text-sm mb-4">The Solution</p>
-          <h3 class="text-2xl lg:text-3xl font-bold text-white mb-8">
-            One platform to unify everything
+          <p class="text-accent-400 font-semibold uppercase tracking-wider text-sm mb-4">Integrated Solution</p>
+          <h3 class="text-2xl lg:text-3xl font-bold text-white mb-8 font-display">
+            Unified platform for operational excellence
           </h3>
 
           <div class="space-y-6">
             {#each [
-              "All advisors access the same real-time information",
-              "Secure document vault with version control and sharing",
-              "Automated deadline tracking with smart reminders",
-              "Role-based access for family members and staff",
-              "Reduce coordination costs by up to 80%"
+              "Centralized data access for all authorized stakeholders",
+              "Secure document repository with version control",
+              "Systematic deadline management and notifications",
+              "Configurable access controls by role and entity",
+              "Measurable reduction in administrative overhead"
             ] as solution}
               <div class="flex items-start gap-4">
                 <div class="w-6 h-6 rounded-full bg-accent-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -304,7 +304,7 @@
 
           <div class="mt-10">
             <Button href="/auth/signup" variant="accent">
-              See How It Works
+              View Implementation
               <ArrowRight class="w-4 h-4" />
             </Button>
           </div>
@@ -317,12 +317,12 @@
   <section id="security" class="py-24 lg:py-32 bg-cream-50">
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
       <div class="max-w-3xl mx-auto text-center mb-16">
-        <p class="text-accent-600 font-semibold uppercase tracking-wider text-sm mb-4">Security</p>
-        <h2 class="text-3xl lg:text-4xl font-bold text-navy-900 tracking-tight">
-          Enterprise-grade security for your most sensitive data
+        <p class="text-accent-600 font-semibold uppercase tracking-wider text-sm mb-4">Security & Compliance</p>
+        <h2 class="text-3xl lg:text-4xl font-bold text-navy-900 tracking-tight font-display">
+          Institutional-grade security architecture
         </h2>
         <p class="mt-6 text-xl text-navy-600">
-          Built from the ground up to meet the security requirements of institutional clients.
+          Purpose-built infrastructure meeting the rigorous requirements of family offices and institutional clients.
         </p>
       </div>
 
@@ -358,12 +358,12 @@
   <section id="pricing" class="py-24 lg:py-32">
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
       <div class="max-w-3xl mx-auto text-center mb-16">
-        <p class="text-accent-600 font-semibold uppercase tracking-wider text-sm mb-4">Pricing</p>
-        <h2 class="text-3xl lg:text-4xl font-bold text-navy-900 tracking-tight">
-          Transparent pricing for every stage
+        <p class="text-accent-600 font-semibold uppercase tracking-wider text-sm mb-4">Engagement Options</p>
+        <h2 class="text-3xl lg:text-4xl font-bold text-navy-900 tracking-tight font-display">
+          Structured pricing aligned with your requirements
         </h2>
         <p class="mt-6 text-xl text-navy-600">
-          Start with a 14-day trial. No credit card required.
+          Complimentary 14-day evaluation period. No commitment required.
         </p>
       </div>
 
@@ -372,7 +372,7 @@
           <div class="relative {plan.popular ? 'lg:-translate-y-4' : ''}">
             {#if plan.popular}
               <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-accent-500 text-white text-sm font-medium rounded-full">
-                Most Popular
+                Recommended
               </div>
             {/if}
 
@@ -401,7 +401,7 @@
                     variant={plan.popular ? 'accent' : 'secondary'}
                     class="w-full"
                   >
-                    Start Free Trial
+                    Begin Evaluation
                   </Button>
                 </div>
               </div>
@@ -421,19 +421,19 @@
   <!-- CTA -->
   <section class="bg-navy-900 py-24 lg:py-32">
     <div class="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-      <h2 class="text-3xl lg:text-4xl font-bold text-white tracking-tight">
-        Ready to unify your family office?
+      <h2 class="text-3xl lg:text-4xl font-bold text-white tracking-tight font-display">
+        Elevate your family office operations
       </h2>
       <p class="mt-6 text-xl text-navy-300">
-        Join over 500 family offices managing $10B+ in assets on WealthSync.ai
+        Serving distinguished family offices and institutions worldwide
       </p>
       <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
         <Button href="/auth/signup" variant="accent" size="lg">
-          Request a Demo
+          Schedule Consultation
           <ArrowRight class="w-5 h-5" />
         </Button>
-        <Button href="mailto:hello@wealthsync.ai" variant="secondary" size="lg">
-          Contact Sales
+        <Button href="mailto:inquiries@wealthsync.ai" variant="secondary" size="lg">
+          Contact Us
         </Button>
       </div>
     </div>

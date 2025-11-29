@@ -57,7 +57,7 @@
     { title: 'Add Advisors', description: 'Your professional network' },
     { title: 'Wealth Entities', description: 'Trusts, LLCs, and more' },
     { title: 'Key Deadlines', description: 'Important dates to track' },
-    { title: 'Complete', description: 'Ready to go!' }
+    { title: 'Complete', description: 'Setup complete' }
   ];
 
   const specialtyOptions = Object.entries(ADVISOR_SPECIALTY_LABELS).map(([value, label]) => ({
@@ -187,7 +187,7 @@
         userId: user.id
       });
 
-      success('Welcome to WealthSync.ai! Your family office is ready.');
+      success('Configuration complete. Your family office platform is ready.');
       goto('/dashboard');
     } catch (err) {
       console.error('Onboarding error:', err);
@@ -264,13 +264,13 @@
         <!-- Step 1: Welcome -->
         <div class="text-center mb-8">
           <div class="w-20 h-20 bg-navy-800 rounded-2xl flex items-center justify-center mx-auto mb-6">
-            <Sparkles class="w-10 h-10 text-gold-500" />
+            <Sparkles class="w-10 h-10 text-accent-400" />
           </div>
           <h1 class="text-3xl font-display font-bold text-navy-800 mb-3">
             Welcome to WealthSync.ai
           </h1>
           <p class="text-lg text-cream-600 max-w-md mx-auto">
-            Let's set up your family office in just a few minutes. We'll help you organize your advisors, track your wealth, and stay on top of important deadlines.
+            Configure your family office platform. Establish your advisor network, wealth structure, and compliance calendar.
           </p>
         </div>
 
@@ -293,7 +293,7 @@
             Add Your Advisors
           </h2>
           <p class="text-cream-600">
-            Who helps manage your family's wealth? Add your CPAs, attorneys, wealth managers, and other trusted advisors.
+            Register your advisory team. Include CPAs, attorneys, wealth managers, and other professional advisors.
           </p>
         </div>
 
@@ -351,7 +351,7 @@
             Wealth Entities
           </h2>
           <p class="text-cream-600">
-            Add the legal entities that hold your family's assets - trusts, LLCs, foundations, etc.
+            Register the legal entities comprising your wealth structure: trusts, LLCs, foundations, and holding companies.
           </p>
         </div>
 
@@ -398,7 +398,7 @@
             Important Deadlines
           </h2>
           <p class="text-cream-600">
-            Add key dates you need to track - tax deadlines, policy renewals, trust reviews, etc.
+            Establish your compliance calendar: tax deadlines, policy renewals, trust reviews, and distributions.
           </p>
         </div>
 
@@ -447,14 +447,14 @@
             <CheckCircle class="w-10 h-10 text-emerald-600" />
           </div>
           <h2 class="text-3xl font-display font-bold text-navy-800 mb-3">
-            You're All Set!
+            Configuration Complete
           </h2>
           <p class="text-lg text-cream-600 max-w-md mx-auto mb-8">
-            Your family office is ready. You can always add more advisors, entities, and deadlines from your dashboard.
+            Your platform is configured. Additional advisors, entities, and deadlines can be added from the dashboard.
           </p>
 
           <Card class="text-left mb-6">
-            <h3 class="font-semibold text-navy-800 mb-4">What you've set up:</h3>
+            <h3 class="font-semibold text-navy-800 mb-4">Configuration Summary</h3>
             <div class="space-y-3">
               <div class="flex items-center gap-3">
                 <div class="w-8 h-8 bg-navy-100 rounded-lg flex items-center justify-center">
@@ -498,7 +498,7 @@
           </Card>
 
           <Button onclick={completeOnboarding} loading={saving} class="w-full" size="lg">
-            Go to Dashboard
+            Access Dashboard
             <ArrowRight class="w-5 h-5" />
           </Button>
         </div>

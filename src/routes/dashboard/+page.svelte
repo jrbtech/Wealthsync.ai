@@ -193,7 +193,7 @@
     <div class="flex items-center justify-center h-[60vh]">
       <div class="text-center">
         <Spinner size="lg" />
-        <p class="mt-4 text-cream-600">Loading your dashboard...</p>
+        <p class="mt-4 text-cream-600">Loading dashboard</p>
       </div>
     </div>
   {:else}
@@ -206,7 +206,7 @@
             {greeting()}, {user?.name?.split(' ')[0] || 'there'}
           </h1>
           <p class="text-navy-500 mt-2 text-lg">
-            Here's your {family?.name || 'family office'} overview.
+            {family?.name || 'Family Office'} Overview
           </p>
         </div>
         <div class="flex items-center gap-3">
@@ -229,7 +229,7 @@
               <AlertCircle class="w-5 h-5 text-orange-600" />
             </div>
             <div class="flex-1">
-              <h4 class="font-semibold text-orange-900">Needs Your Attention</h4>
+              <h4 class="font-semibold text-orange-900">Action Required</h4>
               <ul class="mt-2 text-sm text-orange-800 space-y-1.5">
                 {#if overdueCount > 0}
                   <li class="flex items-center gap-2">
