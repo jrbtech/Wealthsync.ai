@@ -33,22 +33,26 @@ export const POST: RequestHandler = async ({ request }) => {
     const response = await anthropic.messages.create({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 4096,
-      system: `You are a wealth advisor generating a sample wealth audit report. Be professional and impressive. Generate realistic but fictional analysis data.`,
+      system: `You are a wealth advisor generating a sample wealth audit report. Be professional and impressive. Generate realistic but fictional analysis data. IMPORTANT: Return ONLY valid JSON, no markdown code blocks.`,
       messages: [{
         role: 'user',
         content: `Generate a sample wealth audit summary for:
 Client: ${clientName}
 Net Worth: $${netWorth.toLocaleString()}
 
-Return JSON with:
+Return ONLY valid JSON (no markdown, no code blocks) with this exact structure:
 {
-  "executiveSummary": "2 paragraph summary",
-  "assetAllocation": { "investments": %, "realEstate": %, "cash": %, "alternatives": %, "other": % },
-  "risks": [{ "severity": "critical|warning", "title": "...", "impact": "$...", "recommendation": "..." }],
-  "topRecommendations": ["1...", "2...", "3...", "4...", "5..."]
+  "executiveSummary": "A 2 paragraph professional summary of the wealth audit findings",
+  "assetAllocation": { "investments": 45, "realEstate": 25, "cash": 15, "alternatives": 10, "other": 5 },
+  "risks": [
+    { "severity": "critical", "title": "Risk title", "impact": "$500,000", "recommendation": "What to do" }
+  ],
+  "topRecommendations": ["First recommendation", "Second recommendation", "Third recommendation", "Fourth recommendation", "Fifth recommendation"]
 }
 
-Generate 4 realistic risks and 5 actionable recommendations.`
+The assetAllocation values must be numbers that sum to 100.
+Generate 4 realistic risks (2 critical, 2 warning) and 5 actionable recommendations.
+Return ONLY the JSON object, nothing else.`
       }]
     });
 
@@ -57,10 +61,19 @@ Generate 4 realistic risks and 5 actionable recommendations.`
       throw new Error('Unexpected response type');
     }
 
-    let jsonStr = content.text;
+    let jsonStr = content.text.trim();
+
+    // Remove markdown code blocks if present
     const jsonMatch = jsonStr.match(/```(?:json)?\s*([\s\S]*?)```/);
     if (jsonMatch) {
-      jsonStr = jsonMatch[1];
+      jsonStr = jsonMatch[1].trim();
+    }
+
+    // Find JSON object boundaries
+    const startIdx = jsonStr.indexOf('{');
+    const endIdx = jsonStr.lastIndexOf('}');
+    if (startIdx !== -1 && endIdx !== -1) {
+      jsonStr = jsonStr.slice(startIdx, endIdx + 1);
     }
 
     const reportData = JSON.parse(jsonStr);
