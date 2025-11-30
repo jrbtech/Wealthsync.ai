@@ -1,4 +1,4 @@
-import adapter from '@sveltejs/adapter-cloudflare';
+import adapter from '@sveltejs/adapter-node';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -7,10 +7,8 @@ const config = {
 
 	kit: {
 		adapter: adapter({
-			routes: {
-				include: ['/*'],
-				exclude: ['<all>']
-			}
+			out: 'build',
+			precompress: true
 		}),
 		alias: {
 			$lib: './src/lib'
