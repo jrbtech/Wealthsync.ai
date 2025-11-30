@@ -1,0 +1,16 @@
+name = "wealthsync-ai"
+compatibility_date = "2025-11-29"
+compatibility_flags = ["nodejs_compat"]
+
+[build]
+command = "npm run build"
+
+[site]
+bucket = ".svelte-kit/cloudflare"
+
+# Environment variables are set in Cloudflare dashboard
+# Do not commit secrets here
+
+# Uncomment for production domain
+# [env.production]
+# routes = ["wealthsync.ai/*"]

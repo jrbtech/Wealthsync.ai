@@ -12,7 +12,8 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"test": "vitest",
 		"test:run": "vitest run",
-		"test:coverage": "vitest run --coverage"
+		"test:coverage": "vitest run --coverage",
+		"deploy": "npm run build && npx wrangler pages deploy .svelte-kit/cloudflare"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^7.0.0",
@@ -35,14 +36,15 @@
 	},
 	"dependencies": {
 		"@anthropic-ai/sdk": "^0.71.0",
-		"@sveltejs/adapter-node": "^5.4.0",
+		"@sveltejs/adapter-cloudflare": "^7.2.4",
 		"@tailwindcss/postcss": "^4.1.17",
 		"chart.js": "^4.5.1",
 		"date-fns": "^4.1.0",
 		"firebase": "^12.6.0",
 		"firebase-admin": "^13.6.0",
+		"html2canvas": "^1.4.1",
+		"jspdf": "^3.0.4",
 		"lucide-svelte": "^0.555.0",
-		"puppeteer": "^24.31.0",
 		"resend": "^6.5.2",
 		"stripe": "^20.0.0",
 		"uuid": "^13.0.0"

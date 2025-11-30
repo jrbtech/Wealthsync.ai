@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button } from '$lib/components/ui';
+  import { Button, Spinner } from '$lib/components/ui';
   import { formatCurrency } from '$lib/utils/format';
   import { WEALTH_ADVISOR_PLAN_PRICES } from '$lib/types';
   import {
@@ -19,8 +19,64 @@
     Layers,
     Eye,
     Download,
-    AlertTriangle
+    AlertTriangle,
+    Play,
+    Sparkles
   } from 'lucide-svelte';
+
+  // Demo form state
+  let demoFormOpen = $state(false);
+  let demoClientName = $state('');
+  let demoNetWorth = $state('');
+  let demoEmail = $state('');
+  let isGenerating = $state(false);
+  let demoError = $state('');
+
+  async function generateSampleReport() {
+    if (!demoClientName || !demoNetWorth || !demoEmail) {
+      demoError = 'Please fill in all fields';
+      return;
+    }
+
+    isGenerating = true;
+    demoError = '';
+
+    try {
+      const response = await fetch('/api/demo/generate-sample', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          clientName: demoClientName,
+          netWorth: parseFloat(demoNetWorth.replace(/[^0-9.]/g, '')),
+          email: demoEmail
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to generate sample report');
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `WealthSync-Sample-Report.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+
+      demoFormOpen = false;
+      demoClientName = '';
+      demoNetWorth = '';
+      demoEmail = '';
+    } catch (err) {
+      console.error('Error generating sample:', err);
+      demoError = 'Error generating report. Please try again.';
+    } finally {
+      isGenerating = false;
+    }
+  }
 
   const capabilities = [
     {
@@ -188,12 +244,13 @@
         </p>
 
         <div class="mt-10 flex flex-col sm:flex-row gap-4">
-          <Button href="/auth/signup" variant="primary" size="lg">
-            Schedule Consultation
-            <ArrowRight class="w-5 h-5" />
+          <Button variant="accent" size="lg" onclick={() => demoFormOpen = true}>
+            <Sparkles class="w-5 h-5" />
+            Free Sample Report
           </Button>
-          <Button href="#methodology" variant="secondary" size="lg">
-            View Methodology
+          <Button href="/auth/signup" variant="primary" size="lg">
+            Start $997/mo
+            <ArrowRight class="w-5 h-5" />
           </Button>
         </div>
 
@@ -532,3 +589,95 @@
     </div>
   </footer>
 </div>
+
+<!-- Demo Sample Report Modal -->
+{#if demoFormOpen}
+  <div class="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <button
+      class="absolute inset-0 bg-navy-900/60 backdrop-blur-sm"
+      onclick={() => demoFormOpen = false}
+      aria-label="Close modal"
+    ></button>
+
+    <div class="relative bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 animate-in fade-in zoom-in duration-200">
+      <button
+        class="absolute top-4 right-4 text-navy-400 hover:text-navy-600"
+        onclick={() => demoFormOpen = false}
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+
+      <div class="text-center mb-6">
+        <div class="w-14 h-14 bg-accent-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+          <Sparkles class="w-7 h-7 text-accent-600" />
+        </div>
+        <h3 class="text-xl font-semibold text-navy-900">Generate Free Sample Report</h3>
+        <p class="text-navy-600 mt-2 text-sm">
+          See how WealthSync creates institutional-quality wealth audits for your clients
+        </p>
+      </div>
+
+      <form onsubmit={(e) => { e.preventDefault(); generateSampleReport(); }} class="space-y-4">
+        <div>
+          <label for="clientName" class="block text-sm font-medium text-navy-700 mb-1.5">
+            Sample Client Name
+          </label>
+          <input
+            id="clientName"
+            type="text"
+            bind:value={demoClientName}
+            placeholder="e.g., The Johnson Family Trust"
+            class="w-full px-4 py-2.5 border border-cream-300 rounded-lg focus:ring-2 focus:ring-accent-500 focus:border-accent-500"
+            disabled={isGenerating}
+          />
+        </div>
+
+        <div>
+          <label for="netWorth" class="block text-sm font-medium text-navy-700 mb-1.5">
+            Estimated Net Worth
+          </label>
+          <input
+            id="netWorth"
+            type="text"
+            bind:value={demoNetWorth}
+            placeholder="e.g., $15,000,000"
+            class="w-full px-4 py-2.5 border border-cream-300 rounded-lg focus:ring-2 focus:ring-accent-500 focus:border-accent-500"
+            disabled={isGenerating}
+          />
+        </div>
+
+        <div>
+          <label for="email" class="block text-sm font-medium text-navy-700 mb-1.5">
+            Your Email (for follow-up)
+          </label>
+          <input
+            id="email"
+            type="email"
+            bind:value={demoEmail}
+            placeholder="advisor@yourfirm.com"
+            class="w-full px-4 py-2.5 border border-cream-300 rounded-lg focus:ring-2 focus:ring-accent-500 focus:border-accent-500"
+            disabled={isGenerating}
+          />
+        </div>
+
+        {#if demoError}
+          <p class="text-red-600 text-sm">{demoError}</p>
+        {/if}
+
+        <Button type="submit" variant="primary" class="w-full" disabled={isGenerating}>
+          {#if isGenerating}
+            <Spinner class="w-5 h-5" />
+            Generating Report...
+          {:else}
+            <Download class="w-5 h-5" />
+            Generate Sample PDF
+          {/if}
+        </Button>
+
+        <p class="text-xs text-navy-500 text-center">
+          By submitting, you agree to receive follow-up communications from WealthSync
+        </p>
+      </form>
+    </div>
+  </div>
+{/if}
